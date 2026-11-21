@@ -1,0 +1,273 @@
+.ct-section {
+  --bg: #e6eaef;
+  --ink: #0f1624;
+  --dim: #0f162494;
+  --line: #0f162430;
+  --acc: #ff4a1c;
+  color-scheme: light;
+  position: relative;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Instrument Sans", system-ui, sans-serif;
+  min-height: 100svh;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .ct-section {
+    --bg: #0c1017;
+    --ink: #e6eaef;
+    --dim: #e6eaef8f;
+    --line: #e6eaef2e;
+    color-scheme: dark;
+  }
+}
+
+/* Also support dark mode if document or parent has dark theme class */
+.dark .ct-section,
+[data-theme="dark"] .ct-section {
+  --bg: #0c1017;
+  --ink: #e6eaef;
+  --dim: #e6eaef8f;
+  --line: #e6eaef2e;
+  color-scheme: dark;
+}
+
+.ct-section * {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ct-glow-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 60%),
+    color-mix(in srgb, var(--acc) 14%, transparent),
+    transparent 70%
+  );
+  z-index: 0;
+}
+
+.ct-main {
+  position: relative;
+  z-index: 1;
+  min-height: 100svh;
+  max-width: 1500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  padding: 1.1rem 1.25rem 1.2rem;
+}
+
+.ct-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.92rem;
+}
+
+.ct-top .me {
+  font-weight: 500;
+}
+
+.ct-top .loc {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.ct-top i {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--acc);
+  box-shadow: 0 0 0 0 var(--acc);
+  animation: ct-ping 2.4s ease-out infinite;
+}
+
+@keyframes ct-ping {
+  70%, 100% {
+    box-shadow: 0 0 0 9px transparent;
+  }
+}
+
+.ct-headline {
+  margin: 0.6rem 0 0;
+  font-family: Anybody, sans-serif;
+  font-weight: 600;
+  font-variation-settings: "wdth" 80, "wght" 600;
+  font-size: clamp(1.7rem, 6.4vw, 2.7rem);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  max-width: 17em;
+  color: var(--ink);
+}
+
+.ct-lede {
+  margin: 0.5rem 0 0;
+  color: var(--dim);
+  max-width: 30em;
+  line-height: 1.45;
+  font-size: 1rem;
+}
+
+.ct-mid {
+  margin-top: clamp(1rem, 2.8vh, 1.8rem);
+}
+
+.ct-mail {
+  display: block;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: 0.88;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: Anybody, sans-serif;
+  font-variation-settings: "wdth" 60, "wght" 220;
+  outline-offset: 8px;
+}
+
+.ct-mail .ln {
+  display: block;
+}
+
+.ct-mail .c {
+  display: inline-block;
+}
+
+.ct-copy {
+  all: unset;
+  cursor: pointer;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--dim);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  padding: 0.4rem 0;
+  display: inline-block;
+}
+
+.ct-copy:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}
+
+.ct-links {
+  display: grid;
+  gap: 0 3rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.ct-links a {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  color: var(--ink);
+  text-decoration: none;
+  border-top: 1px solid var(--line);
+  padding: 1.05rem 0;
+  font-family: Anybody, sans-serif;
+  font-variation-settings: "wdth" 85, "wght" 500;
+  font-size: clamp(1.3rem, 5.4vw, 1.9rem);
+}
+
+.ct-links a small {
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 0.9rem;
+  color: var(--dim);
+  font-variation-settings: normal;
+}
+
+.ct-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  height: 2px;
+  width: 100%;
+  background: var(--acc);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.ct-links a:hover::after,
+.ct-links a:active::after,
+.ct-links a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.ct-links a:focus-visible {
+  outline: none;
+}
+
+.ct-foot {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.1rem 1.2rem;
+  font-size: 0.92rem;
+}
+
+.ct-foot a {
+  color: var(--ink);
+  text-underline-offset: 4px;
+  padding: 0.5rem 0;
+  text-decoration: none;
+}
+
+.ct-foot a:not(.cv):hover {
+  text-decoration: underline;
+}
+
+.ct-foot .cv {
+  margin-right: auto;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  padding: 0.55rem 1.1rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+
+.ct-foot .cv:hover,
+.ct-foot .cv:active {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+@media (min-width: 760px) {
+  .ct-main {
+    padding: 1.8rem 3rem 2rem;
+    gap: 2.2rem;
+  }
+  .ct-links {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ct-links a {
+    font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-top i {
+    animation: none;
+  }
+  .ct-links a::after {
+    transition: none;
+  }
+}

@@ -6,6 +6,8 @@
  * All real content sourced directly from Devakumar's resume & GitHub.
  */
 
+import { profile } from "./profile";
+
 export const chatbotKnowledge = [
 
   // ─── GREETINGS ──────────────────────────────────────────────
@@ -37,7 +39,7 @@ What would you like to know? 😊`
     reply: `🧑‍💻 **Devakumar A** — AI Developer & Full-Stack Web Engineer
 
 📍 Rajiv Gandhi College of Engineering and Technology (RGCET), Puducherry
-🎓 B.Tech Computer Science & Engineering | CGPA: 7.63
+🎓 B.Tech Computer Science & Engineering | CGPA: ${profile.cgpa}
 🔬 Scopus Published Researcher | ORCID: 0009-0003-8934-6744
 
 Devakumar is a passionate developer who builds intelligent, real-world systems at the intersection of AI and modern web engineering. He has:
@@ -331,7 +333,7 @@ Leadership • Public Speaking • Team Collaboration • Research & Documentati
 
 **B.Tech Computer Science and Engineering**
 📍 Rajiv Gandhi College of Engineering and Technology (RGCET), Puducherry
-📊 CGPA: **7.63**
+📊 CGPA: **${profile.cgpa}**
 📅 Expected Graduation: 2026
 
 **Highlights:**

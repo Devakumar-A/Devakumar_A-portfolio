@@ -1,0 +1,148 @@
+.project-marquee {
+  --accent: #5685ff;
+  --text: #e9ebf3;
+  --muted: #777f94;
+
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+
+  padding: 19px 0;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 100%,
+      rgba(73, 95, 180, 0.10),
+      transparent 65%
+    ),
+    #08090e;
+
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 5%,
+    black 95%,
+    transparent
+  );
+
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 5%,
+    black 95%,
+    transparent
+  );
+}
+
+.project-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: project-scroll 55s linear infinite;
+  will-change: transform;
+}
+
+.project-marquee__group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 38px;
+  padding-right: 38px;
+}
+
+.project-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.project-marquee__number {
+  font-family: monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--accent);
+  opacity: 0.85;
+}
+
+.project-marquee__name {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.35px;
+  color: var(--text);
+  transition: color 0.3s ease;
+}
+
+.project-marquee__item:hover .project-marquee__name {
+  color: #8daaff;
+}
+
+.project-marquee__separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  border: 1px solid rgba(111, 142, 255, 0.28);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.project-marquee__separator span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 9px var(--accent);
+}
+
+.project-marquee__item:hover
+.project-marquee__separator {
+  border-color: var(--accent);
+  transform: rotate(45deg) scale(1.12);
+}
+
+@keyframes project-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pause on hover */
+.project-marquee:hover .project-marquee__track {
+  animation-play-state: paused;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .project-marquee {
+    padding: 16px 0;
+  }
+
+  .project-marquee__group {
+    gap: 25px;
+    padding-right: 25px;
+  }
+
+  .project-marquee__name {
+    font-size: 12px;
+  }
+
+  .project-marquee__number {
+    font-size: 9px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .project-marquee__track {
+    animation: none;
+  }
+}

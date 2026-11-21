@@ -1,0 +1,561 @@
+/* ==============================================================================
+   DEVAKUMAR A. — EXECUTIVE LUXURY EDITORIAL FOOTER
+   - Pure black background (#000000)
+   - Starlight luxury gold metallic gradient typography
+   - 100% professional content (zero neon, zero AI filler, zero gimmicks)
+   - Fully responsive across desktop, tablet, and mobile
+   ============================================================================== */
+
+.prof-footer {
+  --pf-bg: #000000;
+  --pf-surface: #0a0a0c;
+  --pf-surface-elevated: #111115;
+  --pf-border: rgba(255, 255, 255, 0.08);
+  --pf-border-gold: rgba(212, 175, 55, 0.22);
+  --pf-border-gold-hover: rgba(232, 193, 90, 0.55);
+
+  /* Starlight Metallic Gold Palette */
+  --gold-highlight: #FFF2C2;
+  --gold-light: #F7D87E;
+  --gold-base: #DEB14B;
+  --gold-deep: #BA8521;
+  --gold-dark: #8E6010;
+  --gold-gradient: linear-gradient(180deg, #FFF2C2 0%, #F5D377 28%, #D4A338 65%, #9E6B12 100%);
+  --gold-gradient-h: linear-gradient(135deg, #FFF2C2 0%, #E8BC52 35%, #BA8521 70%, #F7D87E 100%);
+  --gold-glow: rgba(222, 177, 75, 0.18);
+
+  --pf-text: #F8FAFC;
+  --pf-muted: rgba(248, 250, 252, 0.65);
+  --pf-subtle: rgba(248, 250, 252, 0.40);
+  --pf-sans: "Inter Tight", system-ui, -apple-system, sans-serif;
+  --pf-serif: "Instrument Serif", serif;
+  --pf-mono: ui-monospace, Menlo, monospace;
+
+  position: relative;
+  background-color: var(--pf-bg) !important;
+  background: var(--pf-bg) !important;
+  color: var(--pf-text);
+  font-family: var(--pf-sans);
+  padding: clamp(28px, 3.5vw, 40px) 0 36px 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  isolation: isolate;
+}
+
+.prof-container {
+  width: min(1280px, 100% - clamp(24px, 5vw, 64px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ==============================================================================
+   1. TOP INQUIRY & CONTACT BANNER (EXECUTIVE CALLOUT)
+   ============================================================================== */
+.prof-inquiry-banner {
+  background: linear-gradient(180deg, rgba(17, 17, 21, 0.95) 0%, rgba(10, 10, 12, 0.95) 100%);
+  border: 1px solid var(--pf-border);
+  border-radius: clamp(20px, 2.5vw, 28px);
+  padding: clamp(32px, 4.5vw, 56px);
+  margin-bottom: clamp(40px, 5vw, 60px);
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.8);
+  transition: border-color 0.35s ease;
+}
+
+.prof-inquiry-banner:hover {
+  border-color: var(--pf-border-gold);
+}
+
+.prof-inquiry-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.prof-inquiry-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--pf-sans);
+  font-size: clamp(11.5px, 1.2vw, 13px);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-base);
+}
+
+.prof-eyebrow-line {
+  width: 32px;
+  height: 1px;
+  background: var(--gold-base);
+  opacity: 0.7;
+}
+
+.prof-inquiry-title {
+  font-size: clamp(30px, 4.5vw, 52px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.prof-inquiry-desc {
+  font-size: clamp(14px, 1.4vw, 16px);
+  line-height: 1.6;
+  color: var(--pf-muted);
+  max-width: 520px;
+  margin: 4px 0 0;
+}
+
+.prof-inquiry-right {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Copy Email Button */
+.prof-email-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 22px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: left;
+}
+
+.prof-email-trigger:hover {
+  background: rgba(222, 177, 75, 0.08);
+  border-color: var(--gold-base);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -6px var(--gold-glow);
+}
+
+.prof-email-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.prof-email-sub {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  font-weight: 600;
+}
+
+.prof-email-address {
+  font-size: clamp(13.5px, 1.3vw, 15.5px);
+  font-weight: 600;
+  color: #ffffff;
+  margin-top: 2px;
+}
+
+.prof-email-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--pf-text);
+  transition: all 0.2s ease;
+}
+
+.prof-email-trigger:hover .prof-email-badge {
+  background: var(--gold-base);
+  color: #000000;
+  font-weight: 700;
+}
+
+.prof-inquiry-actions-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.prof-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--pf-text);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.prof-action-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.prof-action-btn--primary {
+  background: rgba(222, 177, 75, 0.12);
+  border-color: var(--pf-border-gold);
+  color: var(--gold-highlight);
+}
+
+.prof-action-btn--primary:hover {
+  background: var(--gold-base);
+  border-color: var(--gold-base);
+  color: #000000;
+  box-shadow: 0 8px 24px -4px var(--gold-glow);
+}
+
+/* ==============================================================================
+   2. MAIN PROFESSIONAL CARDS GRID (3-COLUMN BENTO)
+   ============================================================================== */
+.prof-cards-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1.3fr;
+  gap: clamp(20px, 2.8vw, 32px);
+  margin-bottom: clamp(48px, 6vw, 72px);
+}
+
+.prof-card {
+  background: var(--pf-surface);
+  border: 1px solid var(--pf-border);
+  border-radius: 20px;
+  padding: clamp(24px, 3vw, 32px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.prof-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+.prof-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold-base);
+  margin: 0 0 18px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Column 1: Professional Summary */
+.prof-summary-text {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--pf-muted);
+  margin: 0 0 20px 0;
+}
+
+.prof-contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.prof-contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--pf-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.prof-contact-item:hover {
+  color: #ffffff;
+}
+
+.prof-contact-icon {
+  color: var(--gold-base);
+  display: flex;
+  align-items: center;
+}
+
+/* Column 2: Navigation Directory */
+.prof-nav-links {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 14px;
+}
+
+.prof-nav-anchor {
+  color: var(--pf-muted);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.prof-nav-anchor:hover {
+  color: var(--gold-light);
+  transform: translateX(3px);
+}
+
+/* Column 3: Professional Networks & Profiles */
+.prof-networks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.prof-network-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--pf-muted);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.prof-network-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prof-network-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--pf-border-gold);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.prof-network-card:hover svg {
+  color: var(--gold-light);
+}
+
+/* ==============================================================================
+   3. MONUMENTAL GOLD NAME SIGNATURE (MATCHING STARLIGHT REFERENCE)
+   ============================================================================== */
+.prof-gold-signature {
+  position: relative;
+  text-align: center;
+  padding: clamp(40px, 6vw, 72px) 0 clamp(28px, 4vw, 48px);
+  user-select: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: clamp(32px, 4vw, 44px);
+  overflow: hidden;
+}
+
+.prof-gold-title {
+  position: relative;
+  z-index: 1;
+  font-family: 'Space Grotesk', 'Inter Tight', var(--pf-sans), system-ui, sans-serif;
+  font-size: clamp(46px, 11vw, 150px);
+  font-weight: 900;
+  -webkit-text-stroke: 1px rgba(222, 177, 75, 0.3);
+  line-height: 0.95;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  margin: 0 0 16px 0;
+  white-space: nowrap;
+  background: linear-gradient(
+    110deg,
+    #DEB14B 0%,
+    #FFF2C2 20%,
+    #F5D377 35%,
+    #9E6B12 50%,
+    #FFF2C2 70%,
+    #DEB14B 85%,
+    #BA8521 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(222, 177, 75, 0.45));
+  animation: goldShimmerMove 8s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+}
+
+@keyframes goldShimmerMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.prof-gold-subtitle-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.prof-gold-sub-line {
+  font-family: var(--pf-sans);
+  font-size: clamp(11.5px, 1.6vw, 18px);
+  font-weight: 700;
+  letter-spacing: clamp(0.18em, 2vw, 0.35em);
+  text-transform: uppercase;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+}
+
+.prof-gold-sub-sep {
+  color: var(--gold-base);
+  opacity: 0.6;
+  font-weight: 700;
+}
+
+/* ==============================================================================
+   4. SUB-FOOTER BASE BAR
+   ============================================================================== */
+.prof-bottom-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  font-size: 13px;
+  color: var(--pf-subtle);
+}
+
+.prof-copyright-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.prof-dot-sep {
+  opacity: 0.35;
+}
+
+.prof-back-to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--pf-text);
+  font-family: var(--pf-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.prof-back-to-top:hover {
+  background: rgba(222, 177, 75, 0.12);
+  border-color: var(--gold-base);
+  color: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+/* ==============================================================================
+   5. RESPONSIVE MEDIA QUERIES
+   ============================================================================== */
+@media (max-width: 1024px) {
+  .prof-inquiry-banner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .prof-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 860px) {
+  .prof-gold-subtitle-wrap {
+    flex-direction: column !important;
+    gap: 8px !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .prof-gold-sub-sep {
+    display: none !important;
+  }
+  .prof-gold-sub-line {
+    font-size: clamp(10.5px, 3.2vw, 13.5px) !important;
+    letter-spacing: 0.16em !important;
+    white-space: normal !important;
+    text-align: center !important;
+    display: block !important;
+    max-width: 95vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .prof-footer {
+    padding-top: 48px;
+    padding-bottom: 28px;
+  }
+  .prof-inquiry-banner {
+    padding: 24px 20px;
+    border-radius: 20px;
+  }
+  .prof-inquiry-actions-row {
+    grid-template-columns: 1fr;
+  }
+  .prof-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+  .prof-networks-grid {
+    grid-template-columns: 1fr;
+  }
+  .prof-gold-title {
+    font-size: clamp(38px, 12vw, 68px);
+    font-weight: 900;
+    -webkit-text-stroke: 0.8px rgba(222, 177, 75, 0.35);
+    letter-spacing: 0.01em;
+    margin-bottom: 12px;
+  }
+  .prof-bottom-bar {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+  .prof-copyright-wrap {
+    justify-content: center;
+  }
+}

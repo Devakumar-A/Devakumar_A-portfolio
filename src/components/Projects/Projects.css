@@ -1,0 +1,775 @@
+/* Fonts (add once to your index.html):
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@500;600&family=VT323&display=swap"> */
+
+.dv-section {
+  --dv-nav: 84px;
+  --dv-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --dv-sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --dv-lcdfont: "VT323", ui-monospace, Menlo, monospace;
+  --dv-text: #f1f1ee;
+
+  position: relative;
+  background: #000;
+  color: var(--dv-text);
+  font-family: var(--dv-sans);
+  padding: clamp(28px, 3.5vw, 40px) 0 clamp(20px, 2.5vw, 28px);
+  overflow-x: clip; /* Prevents cards flying out from creating horizontal scrollbars */
+}
+
+/* ---------- Header ---------- */
+.dv-header, .dv-deck-wrap, .dv-foot {
+  width: min(1200px, 100% - 40px);
+  margin-inline: auto;
+}
+.dv-header { margin-bottom: clamp(32px, 5vw, 60px); }
+.dv-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 16px;
+  font: 500 12px/1 var(--dv-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(241, 241, 238, 0.6);
+}
+.dv-eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: #e8452c;
+}
+.dv-h2 {
+  margin: 0;
+  max-width: 15ch;
+  font-size: clamp(34px, 5vw, 68px);
+  font-weight: 800;
+  font-variation-settings: "wdth" 104;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+/* ---------- Colourways (like hardware variants) ---------- */
+.dv[data-cw="bone"]  { --body: #dcdfde; --body-dark: #b9bfbd; --key: #e8452c; --key-dark: #a62d19; --key-ink: #fff;    --lcd: #c7d1b3; --ink: #18221a; }
+.dv[data-cw="steel"] { --body: #c9d5dc; --body-dark: #a3b4bf; --key: #2b5fd9; --key-dark: #1a3d96; --key-ink: #fff;    --lcd: #bdd3d8; --ink: #0e2b35; }
+.dv[data-cw="lilac"] { --body: #d8d5e3; --body-dark: #b4b0c7; --key: #f0a800; --key-dark: #a97500; --key-ink: #1a1405; --lcd: #d4ceb7; --ink: #2a2414; }
+
+/* ---------- Swipeable Deck Layout ---------- */
+.dv-deck-wrap {
+  position: relative;
+  outline: none;
+}
+.dv-deck-wrap:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 6px;
+  border-radius: 22px;
+}
+
+.dv-deck {
+  display: grid;
+  position: relative;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-bottom: 34px; /* Peek clearance so cards behind do not overlap content below */
+}
+
+.dv-card-wrap {
+  grid-area: 1 / 1;
+  width: 100%;
+  position: relative;
+  transform-origin: 50% 0;
+}
+
+/* Transparent click target on peeking card edges */
+.dv-peek-btn {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 40px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  z-index: 10;
+  padding: 0;
+  outline: none;
+}
+
+/* ---------- Device body ---------- */
+.dv {
+  --print: #131518;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 16px;
+  border-radius: 20px;
+  color: var(--print);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--body) 80%, #fff) 0, var(--body) 18%, var(--body) 80%, var(--body-dark) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.14),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.2),
+    0 44px 70px -30px rgba(0, 0, 0, 0.95);
+  transform-origin: 50% 0;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.dv.is-front {
+  cursor: grab;
+}
+.dv.is-front:active {
+  cursor: grabbing;
+}
+
+.dv::after { /* powder-coat grain */
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Black shading overlay on cards at depth 1 and 2 */
+.dv-dim {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #000;
+  pointer-events: none;
+  z-index: 6;
+  transition: opacity 0.25s ease;
+}
+
+.dv-screw {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  z-index: 2;
+  background: radial-gradient(circle at 35% 30%, #fbfbfa, #8f9391 72%);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+.dv-screw::after {
+  content: "";
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  top: 4px;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.55);
+  transform: rotate(38deg);
+}
+.dv-screw.a { top: 7px; left: 7px; }
+.dv-screw.b { top: 7px; right: 7px; }
+.dv-screw.c { bottom: 7px; left: 7px; }
+.dv-screw.d { bottom: 7px; right: 7px; }
+.dv-vents { display: none; }
+
+/* ---------- Screen ---------- */
+.dv-left {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+.dv-bezel {
+  display: flex;
+  padding: 10px;
+  border-radius: 14px;
+  background: #101113;
+  box-shadow: inset 0 2px 7px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(255, 255, 255, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.4);
+}
+.lcd {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  aspect-ratio: 480 / 330;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--lcd);
+  color: var(--ink);
+  font-family: var(--dv-lcdfont);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3), inset 0 8px 16px rgba(0, 0, 0, 0.16);
+}
+.lcd::before { /* pixel grid */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.07) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 3px);
+}
+.lcd-glass {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.2) 0 20%, transparent 20.3%);
+}
+.lcd-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 12px 3px;
+  font-size: 19px;
+  line-height: 1.1;
+  letter-spacing: 0.08em;
+  background: var(--ink);
+  color: var(--lcd);
+}
+.lcd-body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  animation: lcd-on 0.4s steps(7) both;
+}
+@keyframes lcd-on {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.lcd-art { position: absolute; inset: 0; }
+.lcd-art svg { width: 100%; height: 100%; fill: var(--ink); }
+.lcd-line  { stroke: var(--ink); }
+.lcd-solid { fill: var(--ink); }
+.lcd-hole  { fill: var(--lcd); }
+.lcd-text  { font-family: var(--dv-lcdfont); font-size: 17px; fill: var(--ink); stroke: none; }
+.lcd-text.big { font-size: 28px; }
+.lcd-text.inv { fill: var(--lcd); }
+.lcd-text.dim { opacity: 0.6; }
+.lcd-trace { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: square; animation: lcd-shift var(--d, 10s) linear infinite; }
+.lcd-sprocket { animation: lcd-shift 9s linear infinite; }
+.lcd-flow { fill: none; stroke: var(--ink); stroke-width: 2; stroke-dasharray: 6 6; animation: lcd-flow 0.9s steps(6) infinite; animation-delay: calc(var(--i, 0) * -0.15s); }
+@keyframes lcd-shift { to { transform: translateX(-480px); } }
+@keyframes lcd-flow { to { stroke-dashoffset: -12; } }
+@keyframes lcd-bar { 50% { width: 60px; } }
+
+.lcd-tasks {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  font-size: 22px;
+  line-height: 1;
+  background: var(--lcd);
+  padding-top: 4px;
+}
+.lcd-tasks span { opacity: 0.5; }
+.lcd-tasks .on { opacity: 1; }
+.lcd-caret {
+  width: 9px;
+  height: 16px;
+  background: var(--ink);
+  animation: lcd-blink 1s steps(2, jump-none) infinite;
+}
+@keyframes lcd-blink { 50% { opacity: 0; } }
+
+.lcd-list {
+  list-style: none;
+  margin: 0;
+  padding: 6px 18px;
+  display: grid;
+  align-content: start;
+  font-size: clamp(24px, 2.5vw, 34px);
+  line-height: 1.1;
+}
+.lcd-list li {
+  padding: 14px 0;
+  border-bottom: 2px dotted color-mix(in srgb, var(--ink) 45%, transparent);
+  display: flex;
+  gap: 12px;
+}
+.lcd-list li:last-child { border-bottom: 0; }
+.lcd-list b { font-weight: 400; opacity: 0.7; min-width: 1.4ch; }
+.lcd-stack { grid-template-columns: 1fr 1fr; column-gap: 24px; }
+.lcd-end { display: flex; align-items: center; }
+
+/* Performance pause for cards behind depth 0 and off-screen */
+.dv[data-paused="true"] .lcd-trace,
+.dv[data-paused="true"] .lcd-sprocket,
+.dv[data-paused="true"] .lcd-flow,
+.dv[data-paused="true"] .lcd-caret,
+.dv[data-paused="true"] .lcd-body,
+.dv[data-paused="true"] .lcd-art svg * {
+  animation-play-state: paused !important;
+}
+
+/* ---------- Soft keys under the screen ---------- */
+.dv-keys {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.dv-key {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+.dv-key .led, .led {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.4);
+}
+.dv-key[aria-selected="true"] .led, .led.on {
+  background: var(--key);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--key) 70%, transparent);
+}
+.dv-key .cap {
+  width: 100%;
+  max-width: 92px;
+  height: 24px;
+  border-radius: 7px;
+  transition: transform 0.08s, box-shadow 0.08s;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--body-dark) 70%, #fff), var(--body-dark));
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.18);
+}
+.dv-key:hover .cap { transform: translateY(-1px); }
+.dv-key[aria-selected="true"] .cap, .dv-key:active .cap {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.18);
+}
+.dv-key .lbl {
+  font: 600 10px/1 var(--dv-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(19, 21, 24, 0.72);
+}
+.dv-key:focus-visible, .dv-knob:focus-visible, .dv-btn:focus-visible {
+  outline: 2px solid var(--print);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* ---------- Faceplate ---------- */
+.dv-right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 4px 4px 6px;
+}
+.dv-print {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0;
+  font: 500 11px/1 var(--dv-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(19, 21, 24, 0.72);
+}
+.dv-model {
+  padding: 4px 7px;
+  border: 1.5px solid currentColor;
+  border-radius: 3px;
+}
+.dv-cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.dv-title {
+  margin: 6px 0 0;
+  font-size: clamp(30px, 3vw, 44px);
+  font-weight: 800;
+  font-variation-settings: "wdth" 106;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: #101215;
+  text-wrap: balance;
+}
+.dv-sub {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(19, 21, 24, 0.68);
+}
+.dv-desc {
+  margin: 2px 0 0;
+  max-width: 44ch;
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 450;
+  color: rgba(19, 21, 24, 0.82);
+}
+
+.dv-window {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 4px;
+  padding: 8px 16px;
+  border: 6px solid #101113;
+  border-radius: 10px;
+  background: var(--lcd);
+  color: var(--ink);
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+.dv-window strong {
+  font: 400 62px/0.8 var(--dv-lcdfont);
+  padding-top: 8px;
+}
+.dv-window span {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.dv-window b {
+  font: 600 11px/1 var(--dv-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.dv-window em {
+  font: 400 21px/1 var(--dv-lcdfont);
+  font-style: normal;
+  opacity: 0.75;
+}
+
+.dv-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px 20px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+/* knob */
+.dv-knob {
+  position: relative;
+  width: 140px;
+  height: 92px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  flex: none;
+}
+.dv-knob-t {
+  position: absolute;
+  font: 600 9px/1 var(--dv-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(19, 21, 24, 0.7);
+}
+.dv-knob-t.l { left: 0; top: 40px; }
+.dv-knob-t.m { top: 0; left: 50%; transform: translateX(-50%); }
+.dv-knob-t.r { right: 0; top: 40px; }
+.dv-knob-body {
+  position: absolute;
+  left: 50%;
+  top: 22px;
+  width: 64px;
+  height: 64px;
+  margin-left: -32px;
+  border-radius: 50%;
+  background: repeating-conic-gradient(#25272a 0 5deg, #3b3e42 5deg 10deg);
+  box-shadow: 0 7px 10px rgba(0, 0, 0, 0.35), 0 0 0 3px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.dv-knob-body::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 28%, #666a70, #202225 72%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.dv-knob-body i {
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  width: 4px;
+  height: 15px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: var(--key);
+  z-index: 1;
+}
+
+/* push-button links */
+.dv-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.dv-btn {
+  display: block;
+  padding-bottom: 5px;
+  text-decoration: none;
+  color: #121417;
+  -webkit-tap-highlight-color: transparent;
+}
+.dv-btn .face {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 9px;
+  font: 600 12px/1 var(--dv-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: #eef0ef;
+  box-shadow: 0 5px 0 #8f9694, 0 10px 14px rgba(0, 0, 0, 0.22), inset 0 1px 0 #fff;
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+.dv-btn.main .face {
+  background: var(--key);
+  color: var(--key-ink);
+  box-shadow: 0 5px 0 var(--key-dark), 0 10px 14px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.dv-btn:hover .face { transform: translateY(-1px); }
+.dv-btn:active .face { transform: translateY(4px); box-shadow: 0 1px 0 #8f9694, 0 2px 4px rgba(0, 0, 0, 0.2); }
+.dv-btn.main:active .face { box-shadow: 0 1px 0 var(--key-dark), 0 2px 4px rgba(0, 0, 0, 0.2); }
+
+.dv-built {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 6px 0 0;
+  font: 500 12px/1.5 var(--dv-mono);
+  letter-spacing: 0.04em;
+  color: rgba(19, 21, 24, 0.82);
+}
+.dv-built span {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(19, 21, 24, 0.55);
+}
+
+/* ---------- Controls under the deck ---------- */
+.dv-deck-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+}
+.dv-deck-counter {
+  font: 600 13px/1 var(--dv-mono);
+  letter-spacing: 0.14em;
+  color: rgba(241, 241, 238, 0.7);
+}
+.dv-deck-leds {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.dv-deck-led-btn {
+  background: none;
+  border: 0;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.dv-deck-led-btn:focus-visible,
+.dv-deck-nav-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.dv-deck-led-btn .led {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.6);
+  transition: all 0.2s ease;
+}
+.dv-deck-led-btn.is-active .led {
+  box-shadow: 0 0 9px currentColor;
+}
+.dv-deck-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dv-deck-nav-btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  padding-bottom: 4px;
+}
+.dv-deck-nav-btn .face {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 38px;
+  border-radius: 8px;
+  font: 600 13px/1 var(--dv-mono);
+  background: #eef0ef;
+  color: #121417;
+  box-shadow: 0 4px 0 #8f9694, 0 6px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 #fff;
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+.dv-deck-nav-btn:hover .face {
+  transform: translateY(-1px);
+}
+.dv-deck-nav-btn:active .face {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #8f9694, 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dv-deck-hint {
+  margin: 14px 0 0;
+  text-align: center;
+  font: 500 10px/1 var(--dv-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(241, 241, 238, 0.6);
+}
+.dv-hint-touch { display: none; }
+.dv-hint-desktop { display: inline; }
+@media (hover: none), (max-width: 959px) {
+  .dv-hint-desktop { display: none; }
+  .dv-hint-touch { display: inline; }
+}
+
+/* ---------- Footer link ---------- */
+.dv-foot { margin-top: 32px; }
+.dv-foot a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 4px;
+  font: 600 12px/1 var(--dv-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(241, 241, 238, 0.7);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(241, 241, 238, 0.25);
+}
+.dv-foot a:hover { color: #fff; border-color: #fff; }
+
+/* ---------- Desktop: two-column layout ---------- */
+@media (min-width: 960px) {
+  .dv {
+    display: grid;
+    grid-template-columns: minmax(0, 1.28fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    gap: 28px;
+    height: 100%;
+    min-height: 520px;
+    padding: 20px 24px 20px 20px;
+    border-radius: 24px;
+  }
+  .dv-bezel { flex: 1; min-height: 0; }
+  .lcd { aspect-ratio: auto; }
+  .dv-vents {
+    display: block;
+    position: absolute;
+    right: 44px;
+    bottom: 11px;
+    width: 58px;
+    height: 7px;
+    border-radius: 4px;
+    background: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.3) 0 3px, transparent 3px 8px);
+  }
+}
+@media (min-width: 960px) and (max-height: 780px) {
+  .dv-desc { font-size: 14px; line-height: 1.5; }
+  .dv-title { font-size: clamp(28px, 2.7vw, 38px); }
+  .dv-window strong { font-size: 52px; }
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 520px) {
+  .dv-deck {
+    padding-bottom: 26px; /* 24px peek for depth 2 */
+  }
+  .dv { padding: 12px; border-radius: 18px; gap: 14px; }
+  .lcd-bar { font-size: 16px; padding: 3px 10px 2px; }
+  .lcd-list { font-size: 21px; padding: 4px 12px; }
+  .lcd-list li { padding: 9px 0; }
+  .lcd-tasks { font-size: 18px; gap: 10px; }
+  .dv-knob { width: 128px; height: 84px; }
+  .dv-knob-body { width: 56px; height: 56px; margin-left: -28px; top: 20px; }
+  .dv-window strong { font-size: 52px; }
+  .dv-controls {
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .dv-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+    flex: 1;
+    max-width: 140px;
+  }
+  .dv-btn {
+    width: 100%;
+    margin: 0;
+  }
+  .dv-btn .face {
+    width: 100%;
+    justify-content: center;
+    height: 40px;
+    padding: 0 12px;
+  }
+  .dv-deck-controls {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 14px;
+  }
+  .dv-deck-leds {
+    grid-column: 1 / -1;
+    justify-content: center;
+  }
+}
+
+/* Visually hidden screen reader utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lcd-trace, .lcd-sprocket, .lcd-flow, .lcd-caret, .lcd-body, .lcd-art rect { animation: none !important; }
+  .dv-knob-body, .dv-btn .face, .dv-key .cap { transition: none !important; }
+  .dv-card-wrap { transition: opacity 0.15s ease !important; }
+}

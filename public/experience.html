@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Devakumar A — Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --nav: 0px;
+  --ink: #F4F6FF;
+  --soft: rgba(244, 246, 255, 0.64);
+  --g: #3DD6F5;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+body {
+  background: #000;
+  color: var(--ink);
+  font-family: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: radial-gradient(100% 70% at 50% 45%, #07070C 0%, #000 72%);
+}
+
+.wrap.lite {
+  height: 100svh;
+  min-height: 0;
+}
+
+#sky {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 5 stacked glow layers, one per station colour - no blur filter, no mask */
+.glow-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(1000px, 160vw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glow.on {
+  opacity: 0.12;
+}
+
+header {
+  position: relative;
+  z-index: 3;
+  padding: clamp(16px, 3.2vw, 32px) clamp(20px, 5vw, 56px) 0;
+  pointer-events: none;
+}
+
+.lite header {
+  padding: 16px clamp(16px, 4vw, 28px) 0;
+}
+
+h1 {
+  font-size: clamp(32px, 8.8vw, 72px);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+  font-variation-settings: "opsz" 96;
+}
+
+.lite h1 {
+  font-size: clamp(28px, 8vw, 40px);
+}
+
+header p {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(17px, 4.2vw, 24px);
+  color: var(--soft);
+  margin-top: 8px;
+}
+
+.lite header p {
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+.stage {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  min-height: max(460px, calc(100svh - var(--nav) - 340px));
+  perspective: 900px;
+  perspective-origin: 50% 50%;
+  overflow: clip;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+}
+
+.lite .stage {
+  flex: 1;
+  min-height: 0;
+}
+
+.stage.drag {
+  cursor: grabbing;
+}
+
+.stage:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: -6px;
+  border-radius: 24px;
+}
+
+.world {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.warp {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 2;
+  background: radial-gradient(closest-side, transparent 52%, color-mix(in srgb, var(--g) 22%, transparent) 100%);
+  transition: opacity 0.15s ease-out;
+}
+
+.pulse {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(80vw, 520px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid var(--g);
+  box-shadow: 0 0 40px var(--g), inset 0 0 40px var(--g);
+  pointer-events: none;
+  z-index: 1;
+  animation: pulse 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+@keyframes pulse {
+  from {
+    transform: translate(-50%, -50%) scale(0.3);
+    opacity: 0.95;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(2.4);
+    opacity: 0;
+  }
+}
+
+.gate, .ghost, .card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  visibility: hidden;
+  will-change: transform;
+}
+
+.gate {
+  border-radius: 40px;
+  border: 2px solid hsla(var(--h), 100%, 72%, 0.85);
+  box-shadow: 0 0 26px hsla(var(--h), 100%, 62%, 0.45), inset 0 0 34px hsla(var(--h), 100%, 62%, 0.18);
+  pointer-events: none;
+}
+
+.ghost {
+  font-weight: 800;
+  font-size: clamp(80px, 22vw, 300px);
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--a);
+  pointer-events: none;
+  font-variation-settings: "opsz" 96;
+}
+
+/* Layered card: pane + three floating layers (preserve-3d parent has NO opacity/overflow) */
+.card {
+  width: min(88vw, 620px);
+  padding: clamp(18px, 4.8vw, 34px);
+  pointer-events: none;
+  transform-style: preserve-3d;
+  contain: layout paint style;
+}
+
+.pane {
+  position: absolute;
+  inset: 0;
+  border-radius: 30px;
+  overflow: hidden;
+  opacity: var(--o, 0);
+  background: linear-gradient(165deg, rgba(20, 30, 104, 0.92), rgba(6, 9, 42, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--a) 40%, transparent) inset, 0 0 90px -24px var(--a), 0 40px 80px -40px #000;
+}
+
+.pane::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.14) 50%, transparent 62%);
+  background-size: 320% 100%;
+  background-position: var(--sx, 50%) 0;
+}
+
+.pane::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--a), transparent);
+}
+
+.scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  opacity: 0;
+  background: linear-gradient(90deg, transparent, var(--a), transparent);
+  box-shadow: 0 0 20px 2px var(--a);
+}
+
+.card.arrive .scan {
+  animation: scan 1.1s ease-out;
+}
+
+@keyframes scan {
+  0% { top: 0; opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.l1, .l2, .l3 {
+  position: relative;
+  opacity: var(--o, 0);
+  transform-style: preserve-3d;
+}
+
+.l1 { transform: translateZ(46px); }
+.l2 { transform: translateZ(22px); }
+.l3 { transform: translateZ(34px); }
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.meta .date {
+  background: color-mix(in srgb, var(--a) 24%, transparent);
+  color: var(--a);
+  padding: 6px 12px;
+  border-radius: 99px;
+}
+
+.meta .place {
+  color: var(--soft);
+}
+
+.card h2 {
+  position: relative;
+  font-size: clamp(26px, 6.8vw, 54px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-top: 14px;
+  font-variation-settings: "opsz" 72;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Layout shift prevention: reserve space via pseudo-element */
+.card h2::before {
+  content: attr(data-text);
+  display: block;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.card h2 .h2-text {
+  position: absolute;
+  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.role {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(19px, 4.4vw, 28px);
+  color: var(--a);
+  margin-top: 6px;
+  line-height: 1.15;
+}
+
+.card ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  display: grid;
+  gap: 9px;
+}
+
+.card li {
+  position: relative;
+  padding-left: 18px;
+  font-size: clamp(13.5px, 3.4vw, 16px);
+  line-height: 1.4;
+  color: rgba(244, 246, 255, 0.92);
+}
+
+.card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.52em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--a);
+  box-shadow: 0 0 10px var(--a);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 16px;
+}
+
+.tags i {
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 11px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+/* LITE PROFILE: Flat cards, crisp text snapping, compact HUD */
+.lite .card {
+  transform-style: flat;
+  width: min(90vw, 540px);
+  padding: clamp(14px, 4vw, 24px);
+}
+
+.lite .pane {
+  opacity: 1 !important;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16) inset, 0 0 36px -14px var(--a);
+}
+
+.lite .l1, .lite .l2, .lite .l3 {
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+.lite .gate {
+  box-shadow: none;
+}
+
+.lite .pulse {
+  box-shadow: none;
+}
+
+.lite .map {
+  height: 56px;
+}
+
+.lite .map .done {
+  filter: none;
+}
+
+.lite .map .ship {
+  filter: none;
+}
+
+.lite .hud {
+  gap: 4px;
+  padding: 2px 16px clamp(8px, 2.2vh, 18px);
+}
+
+.lite .row button {
+  width: 48px;
+  height: 48px;
+}
+
+.lite .pos b {
+  font-size: 24px;
+}
+
+.lite .card ul {
+  margin-top: 10px;
+  padding-top: 10px;
+  gap: 6px;
+}
+
+.lite .card li {
+  font-size: clamp(12.5px, 3.2vw, 14.5px);
+  line-height: 1.35;
+}
+
+.lite .tags {
+  margin-top: 10px;
+  gap: 5px;
+}
+
+.lite .tags i {
+  font-size: 11px;
+  padding: 4px 8px;
+}
+
+/* HUD & Mission Map */
+.hud {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 20px clamp(16px, 4vw, 30px);
+}
+
+.map {
+  position: relative;
+  width: min(560px, 92vw);
+  height: 64px;
+}
+
+.map svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.map .base {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.22);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.map .done {
+  fill: none;
+  stroke: var(--g);
+  stroke-width: 3;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 5px var(--g));
+}
+
+.map .ship {
+  fill: #FFFFFF;
+  filter: drop-shadow(0 0 7px var(--g));
+}
+
+.mn {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mn::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin: -5px;
+  border-radius: 50%;
+  background: #0A1166;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  transition: all 0.4s ease;
+}
+
+.mn.on::before {
+  width: 18px;
+  height: 18px;
+  margin: -9px;
+  background: var(--g);
+  border-color: #FFFFFF;
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--g) 30%, transparent), 0 0 24px var(--g);
+}
+
+.mn span {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--soft);
+  white-space: nowrap;
+  display: none;
+  margin-top: -6px;
+}
+
+.mn.on span {
+  color: var(--ink);
+}
+
+.mn:focus-visible {
+  outline: 3px solid #FF7A68;
+  outline-offset: -4px;
+  border-radius: 50%;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 6vw, 36px);
+}
+
+.mid {
+  min-width: 132px;
+  text-align: center;
+}
+
+.pos {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.pos b {
+  color: var(--ink);
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--soft);
+  margin-top: 2px;
+}
+
+.row button {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.row button:hover {
+  background: #FFFFFF;
+  color: #0A1166;
+}
+
+.row button:active {
+  transform: scale(0.92);
+}
+
+.row button:focus-visible {
+  outline: 3px solid #FF7A68;
+  outline-offset: 3px;
+}
+
+.row svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+@media (min-width: 640px) {
+  .mn span { display: block; }
+  .map { height: 70px; }
+}
+
+/* Phone landscape adjustment so front card is never clipped */
+@media (max-height: 520px) and (orientation: landscape) {
+  header {
+    padding-top: calc(var(--nav) + 8px);
+  }
+  h1 {
+    font-size: 26px;
+  }
+  header p {
+    font-size: 14px;
+    margin-top: 2px;
+  }
+  .stage {
+    min-height: max(270px, calc(100svh - var(--nav) - 130px));
+  }
+  .card {
+    padding: 14px 20px;
+    width: min(84vw, 560px);
+  }
+  .card h2 {
+    font-size: 24px;
+    margin-top: 6px;
+  }
+  .role {
+    font-size: 16px;
+    margin-top: 2px;
+  }
+  .card ul {
+    margin-top: 8px;
+    padding-top: 6px;
+    gap: 5px;
+  }
+  .card li {
+    font-size: 12px;
+    line-height: 1.3;
+  }
+  .tags {
+    margin-top: 8px;
+    gap: 5px;
+  }
+  .tags i {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+  .hud {
+    padding-bottom: 8px;
+    gap: 4px;
+  }
+  .map {
+    height: 38px;
+  }
+  .pos b {
+    font-size: 22px;
+  }
+  .row button {
+    width: 46px;
+    height: 46px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse, .card.arrive .scan {
+    animation: none;
+  }
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="glow-wrap" id="glowWrap"></div>
+
+  <header>
+    <h1>Experience</h1>
+    <p>Newest first. Fly back through time.</p>
+  </header>
+
+  <div class="stage" id="stage" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Experience timeline flight, swipe horizontally or use arrow keys to navigate stops">
+    <div class="world" id="world"></div>
+    <div class="warp" id="warp"></div>
+  </div>
+
+  <div class="hud">
+    <div class="map" id="map">
+      <svg id="msvg" aria-hidden="true">
+        <path class="base" id="mbase"/>
+        <path class="done" id="mdone"/>
+        <circle class="ship" id="ship" r="5"/>
+      </svg>
+    </div>
+    <div class="row">
+      <button id="prev" aria-label="Previous experience">
+        <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <div class="mid">
+        <div class="pos" id="pos"></div>
+        <div class="hint" id="hint"></div>
+      </div>
+      <button id="next" aria-label="Next experience">
+        <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="sr" id="live" aria-live="polite"></div>
+</div>
+
+<script>
+(function() {
+  var E = [
+    {
+      co: "Twilight IT",
+      gh: "TWILIGHT",
+      lb: "Twilight",
+      role: "Web Framework Intern",
+      date: "Aug 2025",
+      place: "Puducherry",
+      c: "#3DD6F5",
+      h: 190,
+      b: [
+        "Built and styled responsive web pages using HTML, CSS and JavaScript.",
+        "Developed dynamic, interactive UI components in React.js, improving component reusability.",
+        "Applied modern frontend workflows in a live, production-style environment."
+      ],
+      t: ["React.js", "JavaScript", "HTML", "CSS"]
+    },
+    {
+      co: "Askan Technologies",
+      gh: "ASKAN",
+      lb: "Askan",
+      role: "Backend Development Intern",
+      date: "Jul 2025",
+      place: "Puducherry",
+      c: "#19D3BC",
+      h: 168,
+      b: [
+        "Developed backend functionality using Node.js for server-side applications.",
+        "Designed and managed databases with MongoDB and MongoDB Compass.",
+        "Tested and debugged RESTful APIs in Postman, resolving issues before deployment."
+      ],
+      t: ["Node.js", "MongoDB", "Postman"]
+    },
+    {
+      co: "Cognifyz Technologies",
+      gh: "COGNIFYZ",
+      lb: "Cognifyz",
+      role: "Front-End Development Intern",
+      date: "Feb – Mar 2025",
+      place: "Remote",
+      c: "#FF6A55",
+      h: 8,
+      b: [
+        "Created responsive UIs using HTML, CSS, JavaScript and Bootstrap.",
+        "Collaborated directly with the design team through iterative feedback cycles to improve UX consistency."
+      ],
+      t: ["HTML", "CSS", "JavaScript", "Bootstrap"]
+    },
+    {
+      co: "JPMorgan Chase & Co.",
+      gh: "JPMC",
+      lb: "JPMC",
+      role: "Software Engineering Job Simulation",
+      date: "Jul – Aug 2024",
+      place: "Virtual",
+      c: "#FFC857",
+      h: 42,
+      b: [
+        "Completed a guided simulation modifying an existing GitHub-hosted codebase.",
+        "Interpreted inline comments and requirements to implement targeted code changes.",
+        "Applied debugging, code optimization and version control best practices."
+      ],
+      t: ["Git", "GitHub", "Debugging"]
+    },
+    {
+      co: "Mathoria Mathematics Club",
+      gh: "MATHORIA",
+      lb: "Mathoria",
+      role: "President, RGCET",
+      date: "Leadership",
+      place: "Puducherry",
+      c: "#A99BFF",
+      h: 252,
+      b: [
+        "Led planning and execution of academic events, competitions and workshops.",
+        "Mentored peer students in mathematical and analytical problem solving.",
+        "Built and shipped the club's management portal to digitize registration, events and communication."
+      ],
+      t: ["Leadership", "Mentoring", "Mathoria Portal"]
+    }
+  ];
+
+  var LITE = matchMedia('(pointer:coarse), (max-width: 820px)').matches;
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var $ = function(i) { return document.getElementById(i); };
+  var wrap = $("wrap");
+  if (LITE) {
+    wrap.classList.add("lite");
+  }
+
+  // Safe navbar offset query parameter support
+  try {
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("nav")) {
+      document.documentElement.style.setProperty("--nav", urlParams.get("nav") + "px");
+    }
+  } catch (_) {}
+
+  var n = E.length;
+  var GAP = 1800;
+  var REST = 900;
+  var F = 900;
+  var FAR = 5200;
+  var D0 = 1500;
+  var GS = 450;
+  var L = 6000;
+  var AMPX = 480;
+  var AMPY = 150;
+
+  var stage = $("stage");
+  var world = $("world");
+  var posEl = $("pos");
+  var hintEl = $("hint");
+  var live = $("live");
+  var mapEl = $("map");
+  var warp = $("warp");
+  var glowWrap = $("glowWrap") || wrap;
+
+  var cl = function(v, a, b) { return v < a ? a : v > b ? b : v; };
+
+  function pathX(d) { return Math.sin(d / GAP * 1.15) * AMPX; }
+  function pathY(d) { return Math.cos(d / GAP * 0.8 + 0.6) * AMPY; }
+  function depth(i) { return D0 + i * GAP; }
+  function nearest(d) { return cl(Math.round((d - D0) / GAP), 0, n - 1); }
+
+  var c0 = depth(0) - REST;
+  var cN = depth(n - 1) - REST;
+  var c = reduce ? c0 : c0 - 9000;
+  var target = c0;
+  var prevC = c;
+  var v = 0;
+  var dragging = false;
+  var lastX = 0;
+  var vel = 0;
+  var lastIdx = -1;
+  var dirty = true;
+  var ptx = 0;
+  var pty = 0;
+  var mouseOn = false;
+  var fitScale = 1;
+
+  var cards = [];
+  var ghosts = [];
+  var gates = [];
+  var mnodes = [];
+  var h2s = [];
+  var glowLayers = [];
+
+  // Build 5 stacked station glow layers (no filter, no mask, toggle opacity)
+  E.forEach(function(e, i) {
+    var gl = document.createElement("div");
+    gl.className = "glow" + (i === 0 ? " on" : "");
+    gl.style.background = "radial-gradient(closest-side, " + e.c + ", transparent)";
+    glowWrap.appendChild(gl);
+    glowLayers.push(gl);
+  });
+
+  // Build card DOM nodes
+  E.forEach(function(e, i) {
+    var g = document.createElement("div");
+    g.className = "ghost";
+    g.style.setProperty("--a", e.c);
+    g.textContent = e.gh;
+    world.appendChild(g);
+    ghosts.push(g);
+
+    var k = document.createElement("article");
+    k.className = "card";
+    k.style.setProperty("--a", e.c);
+    k.innerHTML = '<div class="pane"><div class="scan"></div></div><div class="l1"><div class="meta"><span class="date"></span><span class="place"></span></div><h2 data-text="' + e.co + '"><span class="h2-text">' + e.co + '</span></h2><p class="role"></p></div><ul class="l2"></ul><div class="tags l3"></div>';
+
+    k.querySelector(".date").textContent = e.date;
+    k.querySelector(".place").textContent = e.place;
+
+    var h2 = k.querySelector("h2");
+    h2.setAttribute("aria-label", e.co);
+    h2s.push(h2);
+
+    k.querySelector(".role").textContent = e.role;
+
+    e.b.forEach(function(t) {
+      var li = document.createElement("li");
+      li.textContent = t;
+      k.querySelector("ul").appendChild(li);
+    });
+
+    e.t.forEach(function(t) {
+      var s = document.createElement("i");
+      s.textContent = t;
+      k.querySelector(".tags").appendChild(s);
+    });
+
+    world.appendChild(k);
+    cards.push(k);
+
+    var b = document.createElement("button");
+    b.className = "mn";
+    b.setAttribute("aria-label", e.co);
+    b.innerHTML = "<span></span>";
+    b.querySelector("span").textContent = e.lb;
+    b.addEventListener("click", function() { goTo(i); });
+    mapEl.appendChild(b);
+    mnodes.push(b);
+  });
+
+  // Gates
+  var G = Math.ceil((depth(n - 1) + 1500) / GS);
+  for (var j = 0; j < G; j++) {
+    var gt = document.createElement("div");
+    gt.className = "gate";
+    gt.style.setProperty("--h", E[nearest(j * GS)].h);
+    gt._d = j * GS;
+    world.appendChild(gt);
+    gates.push(gt);
+  }
+
+  /* Mission Map SVG */
+  var msvg = $("msvg");
+  var mbase = $("mbase");
+  var mdone = $("mdone");
+  var ship = $("ship");
+  var MW = 0;
+  var MH = LITE ? 56 : 64;
+  var mlen = 1;
+
+  function wave(x) {
+    return MH * 0.38 + Math.sin(x / MW * Math.PI * 2.3) * (LITE ? 8 : 10);
+  }
+
+  function buildMap() {
+    MW = mapEl.clientWidth;
+    MH = mapEl.clientHeight;
+    msvg.setAttribute("width", MW);
+    msvg.setAttribute("height", MH);
+    var d = "";
+    for (var x = 12; x <= MW - 12; x += 4) {
+      d += (x === 12 ? "M" : "L") + x + " " + wave(x).toFixed(1);
+    }
+    mbase.setAttribute("d", d);
+    mdone.setAttribute("d", d);
+    mlen = mdone.getTotalLength();
+    mdone.style.strokeDasharray = mlen;
+    mnodes.forEach(function(b, i) {
+      var px = 12 + i / (n - 1) * (MW - 24);
+      b.style.left = px + "px";
+      b.style.top = wave(px) + "px";
+    });
+  }
+
+  function updMap(p) {
+    var x = 12 + p * (MW - 24);
+    ship.setAttribute("cx", x);
+    ship.setAttribute("cy", wave(x));
+    mdone.style.strokeDashoffset = mlen * (1 - p);
+  }
+
+  /* Layout & projection dimensions */
+  var SW = 0;
+  var SH = 0;
+  var stW = 0;
+  var stH = 0;
+  var cx = 0;
+  var cy = 0;
+  var dpr = LITE ? Math.min(window.devicePixelRatio || 1, 1.5) : Math.min(window.devicePixelRatio || 1, 2);
+  var sky = $("sky");
+  var sx = sky.getContext("2d");
+
+  function layout() {
+    var wr = wrap.getBoundingClientRect();
+    var sr = stage.getBoundingClientRect();
+    SW = wr.width;
+    SH = wr.height;
+    stW = sr.width;
+    stH = sr.height;
+    cx = SW / 2;
+    cy = sr.top - wr.top + stH / 2;
+
+    sky.width = SW * dpr;
+    sky.height = SH * dpr;
+    sx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    var gw = Math.min(stW * 1.02, 1240);
+    var gh = Math.min(stH * 0.94, 780);
+    gates.forEach(function(g) {
+      g.style.width = gw + "px";
+      g.style.height = gh + "px";
+    });
+
+    // Auto-fit scale to prevent card overflow on small phone screens
+    var sampleCard = cards[0];
+    var cardH = sampleCard ? sampleCard.offsetHeight : 0;
+    if (cardH > 0 && stH > 0) {
+      fitScale = Math.min(1, (stH * 0.92) / cardH);
+    } else {
+      fitScale = 1;
+    }
+
+    buildMap();
+    dirty = true;
+  }
+
+  // Debounce resize 120ms; on LITE ignore height-only jitter < 120px (address bar show/hide)
+  var lastResizeW = window.innerWidth;
+  var lastResizeH = window.innerHeight;
+  var resizeTimer = null;
+  function handleResize() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      var nw = window.innerWidth;
+      var nh = window.innerHeight;
+      if (LITE && nw === lastResizeW && Math.abs(nh - lastResizeH) < 120) {
+        return;
+      }
+      lastResizeW = nw;
+      lastResizeH = nh;
+      layout();
+      wake();
+    }, 120);
+  }
+  window.addEventListener("resize", handleResize);
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function() {
+      layout();
+      wake();
+    });
+  }
+
+  /* Pre-rendered radial-gradient sprites for embers (one per station colour) */
+  var spr = E.map(function(e) {
+    var k = document.createElement("canvas");
+    k.width = k.height = 64;
+    var x = k.getContext("2d");
+    var g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
+    g.addColorStop(0, "hsla(" + e.h + ",100%,75%,1)");
+    g.addColorStop(0.35, "hsla(" + e.h + ",100%,60%,0.45)");
+    g.addColorStop(1, "hsla(" + e.h + ",100%,50%,0)");
+    x.fillStyle = g;
+    x.fillRect(0, 0, 64, 64);
+    return k;
+  });
+
+  var starCount = LITE ? 110 : 240;
+  var emberCount = LITE ? 16 : 44;
+  var S = [];
+  var M = [];
+  for (var s = 0; s < starCount; s++) {
+    S.push({
+      x: (Math.random() * 2 - 1) * 1700,
+      y: (Math.random() * 2 - 1) * 1400,
+      d: Math.random() * L,
+      p: Math.random() * 6.28
+    });
+  }
+  for (var q = 0; q < emberCount; q++) {
+    M.push({
+      x: (Math.random() * 2 - 1) * 820,
+      y: (Math.random() * 2 - 1) * 620,
+      d: Math.random() * L,
+      z: 0.5 + Math.random()
+    });
+  }
+
+  function cosmos(t, camX, camY) {
+    sx.clearRect(0, 0, SW, SH);
+    sx.lineCap = "round";
+    sx.globalCompositeOperation = "source-over";
+
+    for (var i = 0; i < S.length; i++) {
+      var o = S[i];
+      var rel = (((o.d - c) % L) + L) % L;
+      if (rel < 50) continue;
+      var sc = F / rel;
+      var x = cx + (o.x - camX) * sc;
+      var y = cy + (o.y - camY) * sc;
+      if (x < -60 || x > SW + 60 || y < -60 || y > SH + 60) continue;
+
+      var r2 = Math.max(30, rel + cl(v * 3, -L / 2, L / 2));
+      var sc2 = F / r2;
+      var x2 = cx + (o.x - camX) * sc2;
+      var y2 = cy + (o.y - camY) * sc2;
+      var a = cl((1 - rel / L) * 1.5 + 0.12, 0, 1) * (0.6 + 0.4 * Math.sin(t * 0.002 + o.p));
+
+      sx.strokeStyle = "rgba(255,255,255," + a.toFixed(2) + ")";
+      sx.lineWidth = Math.min(2.6, 0.5 + sc * 1.1);
+      sx.beginPath();
+      sx.moveTo(x2, y2);
+      sx.lineTo(x + 0.01, y);
+      sx.stroke();
+    }
+
+    if (!LITE) {
+      sx.globalCompositeOperation = "lighter";
+    }
+    for (var k = 0; k < M.length; k++) {
+      var m = M[k];
+      var rl = (((m.d - c) % L) + L) % L;
+      if (rl < 120) continue;
+      var s2 = F / rl;
+      var px = cx + (m.x - camX) * s2;
+      var py = cy + (m.y - camY) * s2;
+      var r = cl(34 * m.z * s2, 3, 70);
+      if (px < -80 || px > SW + 80 || py < -80 || py > SH + 80) continue;
+
+      var alpha = cl((1 - rl / L) * 0.85, 0, 0.7) * cl((rl - 120) / 400, 0, 1);
+      if (LITE) {
+        // Simple circle drawing on LITE (no expensive blend modes)
+        sx.globalAlpha = alpha;
+        sx.fillStyle = E[nearest(c + rl)].c;
+        sx.beginPath();
+        sx.arc(px, py, Math.max(2, r * 0.45), 0, 6.28);
+        sx.fill();
+      } else {
+        sx.globalAlpha = alpha;
+        sx.drawImage(spr[nearest(c + rl)], px - r, py - r, r * 2, r * 2);
+      }
+    }
+    sx.globalAlpha = 1;
+    sx.globalCompositeOperation = "source-over";
+  }
+
+  function place(el, d, xo, yo, tail, mul, camX, camY, viaVar, roundPixel) {
+    var rel = d - c;
+    var nr = cl((rel - REST * 0.3) / (REST * 0.5), 0, 1);
+    var fr = cl((FAR - rel) / (FAR - REST * 2.3), 0, 1);
+    var o = nr * fr * (mul || 1);
+
+    if (o < 0.01) {
+      if (el._v !== 0) {
+        el.style.visibility = "hidden";
+        el._v = 0;
+      }
+      return;
+    }
+    el._v = 1;
+    el.style.visibility = "visible";
+
+    if (viaVar && !LITE) {
+      el.style.setProperty("--o", o.toFixed(3));
+    } else {
+      el.style.opacity = o.toFixed(3);
+    }
+
+    var tx = pathX(d) + xo - camX;
+    var ty = pathY(d) + yo - camY;
+    var tz = F - rel;
+    if (roundPixel || (LITE && Math.abs(rel - REST) < 60)) {
+      tx = Math.round(tx);
+      ty = Math.round(ty);
+      tz = Math.round(tz);
+    }
+    el.style.transform = "translate3d(" + tx + "px," + ty + "px," + tz + "px) translate(-50%,-50%)" + (tail || "");
+  }
+
+  /* Scrambled glyphs decoder on arrival without layout shift */
+  var CH = "▮▯◢◣◤◥#/<>01";
+  function decode(el, text) {
+    clearInterval(el._t);
+    var span = el.querySelector(".h2-text") || el;
+    if (reduce) {
+      span.textContent = text;
+      return;
+    }
+    var f = 0;
+    var tot = 22;
+    el._t = setInterval(function() {
+      f++;
+      var out = "";
+      for (var i = 0; i < text.length; i++) {
+        out += (text[i] === " " || i < text.length * f / tot) ? text[i] : CH[Math.random() * CH.length | 0];
+      }
+      span.textContent = out;
+      if (f >= tot) {
+        clearInterval(el._t);
+        span.textContent = text;
+      }
+    }, 32);
+  }
+
+  function arrive(i) {
+    decode(h2s[i], E[i].co);
+    cards[i].classList.remove("arrive");
+    void cards[i].offsetWidth;
+    cards[i].classList.add("arrive");
+
+    if (!reduce && !LITE) {
+      var p = document.createElement("div");
+      p.className = "pulse";
+      p.addEventListener("animationend", function() { p.remove(); });
+      stage.appendChild(p);
+    }
+  }
+
+  function render(t) {
+    var m = c + REST;
+    var idle = (reduce || LITE) ? 0 : 1;
+    var camX = pathX(m) + (LITE ? 0 : ptx * 70 + Math.sin(t * 0.0006) * 14 * idle);
+    var camY = pathY(m) + (LITE ? 0 : pty * 45 + Math.cos(t * 0.0008) * 10 * idle);
+    var roll = cl((pathX(m + 250) - pathX(m - 250)) * 0.008, -7, 7);
+    world.style.transform = "rotateZ(" + roll.toFixed(2) + "deg)";
+
+    var idx = cl(Math.round((c - c0) / GAP), 0, n - 1);
+    var boost = 1 + Math.min(1.2, Math.abs(v) / 50);
+    var gm = Math.min(1, 0.62 * boost);
+
+    for (var j = 0; j < gates.length; j++) {
+      place(gates[j], gates[j]._d, 0, 0, "", gm, camX, camY);
+    }
+
+    for (var i = 0; i < n; i++) {
+      var d = depth(i);
+      var rel = d - c;
+      var rawYaw = cl((pathX(d - 300) - pathX(d + 300)) * 0.014, -20, 20);
+      var yawFactor = cl(Math.abs(rel - REST) / (REST * 0.6), 0, 1);
+      var yaw = LITE ? 0 : (rawYaw * yawFactor);
+      var tail = " rotateY(" + yaw.toFixed(2) + "deg)";
+
+      if (!LITE && i === idx) {
+        tail += " rotateY(" + (ptx * 7).toFixed(2) + "deg) rotateX(" + (pty * -5).toFixed(2) + "deg)";
+      }
+      if (fitScale < 1) {
+        tail += " scale(" + fitScale.toFixed(3) + ")";
+      }
+
+      var isFrontSettle = i === idx && Math.abs(rel - REST) < 60;
+      place(cards[i], d, 0, 0, tail, 1, camX, camY, true, isFrontSettle);
+      if (!LITE) {
+        cards[i].style.setProperty("--sx", (i === idx ? 50 + ptx * 40 : 50) + "%");
+      }
+      place(ghosts[i], d + 950, 0, -40, "", 0.3, camX, camY);
+    }
+
+    warp.style.opacity = Math.min(0.85, Math.abs(v) / 55).toFixed(2);
+
+    if (idx !== lastIdx) {
+      var first = lastIdx < 0;
+      if (!first && !reduce && !LITE && navigator.vibrate) {
+        try { navigator.vibrate(6); } catch (_) {}
+      }
+      if (!first) {
+        mnodes[lastIdx].classList.remove("on");
+        if (glowLayers[lastIdx]) glowLayers[lastIdx].classList.remove("on");
+      }
+      lastIdx = idx;
+      mnodes[idx].classList.add("on");
+      if (glowLayers[idx]) glowLayers[idx].classList.add("on");
+
+      wrap.style.setProperty("--g", E[idx].c);
+      posEl.innerHTML = "<b>0" + (idx + 1) + "</b> / 0" + n;
+      hintEl.textContent = E[idx].date + ", " + E[idx].place;
+      live.textContent = E[idx].co + ", " + E[idx].role;
+
+      if (!first || !reduce) arrive(idx);
+    }
+
+    updMap(cl((c - c0) / (cN - c0), 0, 1));
+    cosmos(t, camX, camY);
+  }
+
+  /* Efficient loop & wake management */
+  var running = false;
+  var introDone = false;
+  var isVisible = true;
+
+  function wake() {
+    dirty = true;
+    if (!running && isVisible) {
+      running = true;
+      requestAnimationFrame(frame);
+    }
+  }
+
+  function frame(t) {
+    if (!running) return;
+
+    var k = dragging ? 0.38 : (reduce ? 1 : (LITE ? 0.075 : 0.055));
+    c += (target - c) * k;
+    if (Math.abs(target - c) < 0.5) {
+      c = target;
+      introDone = true;
+    }
+    v = c - prevC;
+    prevC = c;
+
+    var isMoving = Math.abs(v) > 0.01 || Math.abs(target - c) > 0.05;
+    var needRender = dirty || isMoving || (!reduce && !LITE);
+
+    if (needRender) {
+      render(t || 0);
+      dirty = false;
+    }
+
+    // On LITE, when carousel is settled at station and stationary, stop rAF to reach 0% CPU
+    if ((LITE || reduce) && !dragging && c === target && introDone && Math.abs(v) < 0.01) {
+      running = false;
+      return;
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  // IntersectionObserver to pause loop when scrolled out of view
+  if ("IntersectionObserver" in window) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        isVisible = entry.intersectionRatio >= 0.05;
+        if (isVisible) {
+          wake();
+        } else {
+          running = false;
+        }
+      });
+    }, { threshold: [0, 0.05, 0.1] });
+    obs.observe(wrap);
+  }
+
+  document.addEventListener("visibilitychange", function() {
+    if (!document.hidden) wake();
+  });
+
+  function goTo(i) {
+    target = c0 + cl(i, 0, n - 1) * GAP;
+    dirty = true;
+    wake();
+  }
+
+  function by(d) {
+    goTo(Math.round((target - c0) / GAP) + d);
+  }
+
+  layout();
+  wake();
+
+  /* Gestures: horizontal flight with inertia & snap */
+  function unit() {
+    return GAP / Math.max(280, stW * 0.85);
+  }
+
+  stage.addEventListener("pointerdown", function(e) {
+    dragging = true;
+    vel = 0;
+    lastX = e.clientX;
+    stage.classList.add("drag");
+    try { stage.setPointerCapture(e.pointerId); } catch (_) {}
+    wake();
+  });
+
+  stage.addEventListener("pointermove", function(e) {
+    if (!LITE && e.pointerType === "mouse") {
+      mouseOn = true;
+      var r = stage.getBoundingClientRect();
+      ptx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      pty = ((e.clientY - r.top) / r.height - 0.5) * 2;
+      dirty = true;
+      wake();
+    }
+    if (!dragging) return;
+    var dx = e.clientX - lastX;
+    lastX = e.clientX;
+    var d = -dx * unit();
+    vel = vel * 0.6 + d * 0.4;
+    target = cl(target + d, c0 - GAP * 0.25, cN + GAP * 0.25);
+    dirty = true;
+    wake();
+  });
+
+  function end() {
+    if (!dragging) return;
+    dragging = false;
+    stage.classList.remove("drag");
+    goTo(Math.round((target + vel * 7 - c0) / GAP));
+  }
+
+  stage.addEventListener("pointerup", end);
+  stage.addEventListener("pointercancel", end);
+  stage.addEventListener("pointerleave", function() {
+    mouseOn = false;
+    ptx = 0;
+    pty = 0;
+    dirty = true;
+  });
+
+  $("prev").addEventListener("click", function() { by(-1); });
+  $("next").addEventListener("click", function() { by(1); });
+
+  stage.addEventListener("keydown", function(e) {
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+      by(1);
+      e.preventDefault();
+      wake();
+    }
+    if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      by(-1);
+      e.preventDefault();
+      wake();
+    }
+  });
+
+  stage.addEventListener("wheel", function(e) {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 8) {
+      e.preventDefault();
+      target = cl(target + e.deltaX * 2.2, c0 - GAP * 0.25, cN + GAP * 0.25);
+      clearTimeout(stage._w);
+      stage._w = setTimeout(function() {
+        goTo(Math.round((target - c0) / GAP));
+      }, 140);
+      dirty = true;
+      wake();
+    }
+  }, { passive: false });
+
+  /* DeviceOrientation gyro parallax only on desktop / non-LITE if supported */
+  if (!reduce && !LITE && window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission !== "function") {
+    window.addEventListener("deviceorientation", function(e) {
+      if (mouseOn || e.gamma == null) return;
+      ptx += (cl(e.gamma / 28, -1, 1) - ptx) * 0.15;
+      pty += (cl(((e.beta || 45) - 45) / 28, -1, 1) - pty) * 0.15;
+      dirty = true;
+      wake();
+    });
+  }
+})();
+</script>
+</body>
+</html>

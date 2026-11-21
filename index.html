@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#020617" />
+    <meta name="theme-color" content="#050a19" />
 
     <!-- ══════════════════════════════════════════════════════════
          PRIMARY SEO META TAGS
@@ -59,8 +59,11 @@
     <!-- ══════════════════════════════════════════════════════════
          FAVICON
     ═══════════════════════════════════════════════════════════ -->
-    <link rel="icon" type="image/svg+xml" href="/Devakumar/favicon.svg" />
-    <link rel="apple-touch-icon" href="/Devakumar/favicon.svg" />
+    <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="%BASE_URL%favicon.ico" sizes="48x48">
+    <link rel="apple-touch-icon" href="%BASE_URL%apple-touch-icon.png">
+    <link rel="manifest" href="%BASE_URL%site.webmanifest">
+    <meta name="theme-color" content="#050a19">
 
     <!-- ══════════════════════════════════════════════════════════
          PERFORMANCE: DNS PREFETCH & PRECONNECT
@@ -74,7 +77,7 @@
          FONTS — Google Fonts with display=swap for performance
     ═══════════════════════════════════════════════════════════ -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Space+Grotesk:wght@400;600;700&family=Share+Tech+Mono&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,100..900&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Figtree:wght@400;500;600&family=Instrument+Sans:wght@400;500&family=Inter:wght@300;400;600;700;900&family=Space+Grotesk:wght@400;600;700&family=Share+Tech+Mono&display=swap"
       rel="stylesheet"
     />
 
@@ -84,7 +87,9 @@
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <script>
       (function() {
-        emailjs.init("wZlbXJUvV_nKvDAVX");
+        if (typeof emailjs !== 'undefined') {
+          emailjs.init("wZlbXJUvV_nKvDAVX");
+        }
       })();
     </script>
 
@@ -197,6 +202,9 @@
       "inLanguage": "en-US"
     }
     </script>
+
+    <!-- Hardware Device Card & Certifications Fonts: Archivo, IBM Plex Mono, VT323, Instrument Serif -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@500;600&family=VT323&family=Instrument+Serif:ital@0;1&display=swap">
 
   </head>
   <body>

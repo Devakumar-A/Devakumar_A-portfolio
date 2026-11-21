@@ -1,8 +1,11 @@
 @import "./styles/tokens.css";
+@import "./css/cinematic-theme.css";
+@import "./css/cinematic-sections.css";
 @import "./css/style.css";
 @import "./css/header.css";
 @import "./css/sections.css";
 @import "./css/certificates.css";
+@import "./css/editorial-sections.css";
 @import "./css/animations.css";
 @tailwind base;
 @tailwind components;
@@ -44,7 +47,7 @@
 
   body {
     color: #FAFAFA;
-    overflow-x: hidden;
+    overflow-x: clip;
     min-height: 100dvh;
   }
 

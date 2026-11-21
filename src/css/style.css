@@ -11,7 +11,7 @@
 
 html, body {
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body.scroll-locked {
@@ -148,13 +148,13 @@ body {
 }
 
 /* =====================================================
-   HEADER OFFSET
+   HEADER OFFSET (Hero is full-bleed 100vh at top)
 ===================================================== */
 main {
   /* DO NOT add z-index here. position:relative + z-index creates a stacking
      context that could interfere with the fixed canvas z-ordering. */
   position: relative;
-  padding-top: 72px; /* fixed header height */
+  padding-top: 0;
 }
 
 /* =====================================================
@@ -162,19 +162,29 @@ main {
 ===================================================== */
 section {
   width: 100%;
-  padding: 6rem 1.5rem;
+  box-sizing: border-box;
+}
+
+#experience {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: #000000 !important;
+  width: 100% !important;
+}
+
+#experience iframe {
+  width: 100% !important;
+  height: 100svh !important;
+  border: 0 !important;
+  display: block !important;
+  background: #000000 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .section-container {
   max-width: 1200px;
   margin: auto;
-}
-
-/* Mobile spacing */
-@media (max-width: 768px) {
-  section {
-    padding: 4rem 1.25rem;
-  }
 }
 
 /* =====================================================
@@ -200,20 +210,8 @@ p {
 }
 
 /* =====================================================
-   HERO
+   HERO (Moved to cinematic-sections.css)
 ===================================================== */
-#home {
-  min-height: calc(100vh - 72px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.hero-container {
-  max-width: 900px;
-  margin: auto;
-}
 
 /* =====================================================
    GLASS PANELS

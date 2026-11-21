@@ -1,0 +1,557 @@
+/* ==============================================================================
+   DEVAKUMAR A. — MINIMALIST ADVANCED CONTACT STUDIO
+   - Pure black background (#000000)
+   - Bespoke Conversational Editorial Letterform + Quick Connect Matrix
+   - Real-time Interactive Dispatch Ticket / Telemetry
+   - Starlight Gold Metallic accents & Zero AI Clutter
+   - 100% Mobile & Desktop Responsive
+   ============================================================================== */
+
+.ct-section {
+  --ct-bg: #000000;
+  --ct-surface: #0a0a0d;
+  --ct-surface-card: #0f1015;
+  --ct-border: rgba(255, 255, 255, 0.08);
+  --ct-border-gold: rgba(222, 177, 75, 0.28);
+  --ct-border-gold-bright: rgba(247, 216, 126, 0.6);
+
+  /* Gold Luxury Palette */
+  --ct-gold-light: #FFF2C2;
+  --ct-gold-base: #DEB14B;
+  --ct-gold-dark: #9E6B12;
+  --ct-gold-gradient: linear-gradient(135deg, #FFF2C2 0%, #E8BC52 35%, #BA8521 70%, #F7D87E 100%);
+  --ct-gold-glow: rgba(222, 177, 75, 0.15);
+
+  --ct-text: #F8FAFC;
+  --ct-muted: rgba(248, 250, 252, 0.65);
+  --ct-subtle: rgba(248, 250, 252, 0.38);
+  --ct-sans: "Inter Tight", system-ui, -apple-system, sans-serif;
+  --ct-display: "Space Grotesk", system-ui, sans-serif;
+  --ct-mono: ui-monospace, Menlo, monospace;
+  --ct-serif: "Instrument Serif", serif;
+
+  position: relative;
+  background-color: var(--ct-bg) !important;
+  background: var(--ct-bg) !important;
+  color: var(--ct-text);
+  font-family: var(--ct-sans);
+  padding: clamp(72px, 9vw, 120px) 0 clamp(64px, 8vw, 100px) 0;
+  overflow: hidden;
+  isolation: isolate;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.ct-container {
+  width: min(1280px, 100% - clamp(24px, 5vw, 64px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Subtle background illumination */
+.ct-ambient-glow {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(900px, 90vw);
+  height: 450px;
+  background: radial-gradient(ellipse at center, rgba(222, 177, 75, 0.07) 0%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ==============================================================================
+   1. SECTION HEADER (MINIMALIST & EDITORIAL)
+   ============================================================================== */
+.ct-header {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto clamp(40px, 5.5vw, 64px);
+  position: relative;
+  z-index: 1;
+}
+
+.ct-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: clamp(11.5px, 1.2vw, 13px);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ct-gold-base);
+  margin-bottom: 14px;
+}
+
+.ct-eyebrow-line {
+  width: 28px;
+  height: 1px;
+  background: var(--ct-gold-base);
+  opacity: 0.6;
+}
+
+.ct-title {
+  font-family: var(--ct-display);
+  font-size: clamp(34px, 5vw, 64px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+}
+
+.ct-title-gold {
+  background: var(--ct-gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ct-subtitle {
+  font-size: clamp(14.5px, 1.5vw, 17px);
+  line-height: 1.6;
+  color: var(--ct-muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ==============================================================================
+   2. MAIN INTERACTIVE EXPERIENCE (SPLIT DESK)
+   ============================================================================== */
+.ct-experience-grid {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: clamp(28px, 4vw, 48px);
+  align-items: start;
+}
+
+/* ==============================================================================
+   3. LEFT: THE CONVERSATIONAL DISPATCH STUDIO
+   ============================================================================== */
+.ct-letterform-card {
+  background: var(--ct-surface);
+  border: 1px solid var(--ct-border);
+  border-radius: clamp(20px, 2.5vw, 28px);
+  padding: clamp(28px, 4vw, 48px);
+  box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.85);
+  position: relative;
+  transition: border-color 0.3s ease;
+}
+
+.ct-letterform-card:focus-within {
+  border-color: var(--ct-border-gold);
+}
+
+/* Intent Topic Selector Pills */
+.ct-intent-block {
+  margin-bottom: clamp(24px, 3.2vw, 36px);
+}
+
+.ct-intent-label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ct-gold-base);
+  margin-bottom: 12px;
+}
+
+.ct-intent-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ct-intent-chip {
+  padding: 8px 16px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: var(--ct-muted);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.ct-intent-chip:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.ct-intent-chip.is-active {
+  background: rgba(222, 177, 75, 0.12);
+  border-color: var(--ct-gold-base);
+  color: var(--ct-gold-light);
+  font-weight: 600;
+  box-shadow: 0 4px 18px -4px var(--ct-gold-glow);
+}
+
+/* Form Flow */
+.ct-form-flow {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 2.5vw, 26px);
+}
+
+.ct-input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.ct-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ct-field-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ct-subtle);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+
+.ct-field:focus-within .ct-field-label {
+  color: var(--ct-gold-base);
+}
+
+.ct-input,
+.ct-textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-family: var(--ct-sans);
+  font-size: clamp(14px, 1.4vw, 15.5px);
+  color: #ffffff;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.ct-input::placeholder,
+.ct-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.28);
+}
+
+.ct-input:focus,
+.ct-textarea:focus {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--ct-gold-base);
+  box-shadow: 0 0 20px -5px var(--ct-gold-glow);
+}
+
+.ct-textarea {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* Submit Action Button */
+.ct-submit-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 10px;
+}
+
+.ct-sla-note {
+  font-size: 12px;
+  color: var(--ct-subtle);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ct-sla-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+}
+
+.ct-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 32px;
+  border-radius: 14px;
+  background: var(--ct-gold-gradient);
+  border: none;
+  color: #000000;
+  font-family: var(--ct-sans);
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 25px -5px var(--ct-gold-glow);
+}
+
+.ct-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -4px rgba(222, 177, 75, 0.35);
+  filter: brightness(1.08);
+}
+
+.ct-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Status Notifications */
+.ct-status-toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.ct-status-toast.is-success {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+}
+
+.ct-status-toast.is-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}
+
+/* ==============================================================================
+   4. RIGHT: THE LIVE TRANSMISSION TICKET & INSTANT CHANNELS
+   ============================================================================== */
+.ct-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Live Dispatch Ticket Card */
+.ct-ticket-card {
+  position: relative;
+  background: linear-gradient(180deg, #121319 0%, #0b0c10 100%);
+  border: 1px solid var(--ct-border);
+  border-radius: 22px;
+  padding: 24px;
+  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.ct-ticket-card:hover {
+  border-color: var(--ct-border-gold);
+}
+
+.ct-ticket-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.12);
+  margin-bottom: 18px;
+}
+
+.ct-ticket-tag {
+  font-family: var(--ct-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ct-gold-base);
+}
+
+.ct-ticket-id {
+  font-family: var(--ct-mono);
+  font-size: 11px;
+  color: var(--ct-subtle);
+}
+
+.ct-ticket-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ct-ticket-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ct-ticket-k {
+  font-family: var(--ct-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ct-subtle);
+}
+
+.ct-ticket-v {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #ffffff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ct-ticket-v.is-placeholder {
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.ct-ticket-barcode-wrap {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ct-barcode-lines {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 24px;
+  opacity: 0.45;
+}
+
+.ct-b-bar {
+  background: var(--ct-gold-base);
+  height: 100%;
+}
+
+.ct-ticket-auth-stamp {
+  font-family: var(--ct-mono);
+  font-size: 10px;
+  color: var(--ct-gold-light);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Fast Direct Connect Cards */
+.ct-direct-card {
+  background: var(--ct-surface);
+  border: 1px solid var(--ct-border);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ct-direct-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ct-gold-base);
+  margin: 0;
+}
+
+.ct-quick-buttons-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ct-quick-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--ct-text);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.ct-quick-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.ct-quick-btn-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ct-quick-icon {
+  color: var(--ct-gold-base);
+  display: flex;
+  align-items: center;
+}
+
+.ct-quick-badge {
+  font-family: var(--ct-mono);
+  font-size: 11px;
+  color: var(--ct-subtle);
+}
+
+/* ==============================================================================
+   5. RESPONSIVE MEDIA QUERIES (MOBILE & TABLET)
+   ============================================================================== */
+@media (max-width: 1024px) {
+  .ct-experience-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ct-section {
+    padding-top: 56px;
+    padding-bottom: 48px;
+  }
+  .ct-letterform-card {
+    padding: 24px 18px;
+    border-radius: 20px;
+  }
+  .ct-input-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .ct-submit-bar {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 14px;
+  }
+  .ct-submit-btn {
+    width: 100%;
+  }
+  .ct-sla-note {
+    justify-content: center;
+  }
+  .ct-ticket-card {
+    padding: 20px 18px;
+  }
+}

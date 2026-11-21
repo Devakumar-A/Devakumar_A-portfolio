@@ -1,0 +1,344 @@
+/* ============ Fonts (self-hosted — no layout shift, no third-party request) ============ */
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("../fonts/instrument-serif-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("../fonts/instrument-serif-latin-400-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter Tight";
+  src: url("../fonts/inter-tight-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter Tight";
+  src: url("../fonts/inter-tight-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter Tight";
+  src: url("../fonts/inter-tight-latin-600-normal.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============ Experience section ============ */
+.xp {
+  --xp-bg: #080808;
+  --xp-fg: #f8fafc;
+  --xp-muted: rgba(226, 232, 240, 0.60);
+  --xp-serif: "Instrument Serif", "Times New Roman", serif;
+  --xp-sans: "Inter Tight", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --xp-slide-top: 36%;
+  --xp-slide-bottom: 80%;
+
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  min-height: 600px;
+  overflow: hidden;
+  background: var(--xp-bg);
+  color: var(--xp-fg);
+  isolation: isolate;
+  contain: layout paint;
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: grab;
+  outline: none;
+}
+.xp.is-dragging { cursor: grabbing; }
+.xp:focus-visible { outline: 2px solid var(--xp-fg); outline-offset: -8px; }
+
+/* Section header block: unified flex column, ZERO overlap */
+.xp__header {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: clamp(65px, 8.5vh, 90px);
+  padding-bottom: 8px;
+  pointer-events: none;
+}
+
+.xp__heading {
+  margin: 0 0 6px;
+  font: 400 clamp(13px, 1.8vw, 15px)/1.2 var(--xp-serif);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(248, 250, 252, 0.50);
+}
+.xp__heading em { font-style: italic; }
+
+.xp__stage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.xp__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Active project title */
+.xp__title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.xp__name,
+.xp__cat,
+.xp__cur { position: relative; overflow: hidden; }
+.xp__name {
+  height: 1.15em;
+  font: 700 clamp(24px, 3.6vw, 42px)/1.15 var(--xp-sans);
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+.xp__cat {
+  height: 1.4em;
+  margin-top: 4px;
+  font: 500 11px/1.4 var(--xp-sans);
+  letter-spacing: 0.20em;
+  color: rgba(255, 255, 255, 0.65);
+  text-transform: uppercase;
+}
+.xp__line { position: absolute; inset: 0; display: block; white-space: nowrap; }
+
+/* 01 / 05 Counter cleanly centered beneath the center card */
+.xp__counter {
+  position: absolute;
+  top: calc(var(--xp-slide-bottom) + 16px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  opacity: 1;
+  font: 500 12px/1.4 var(--xp-sans);
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.70);
+  pointer-events: none;
+}
+.xp__cur { width: 2ch; height: 1.4em; text-align: right; }
+.xp__sep { opacity: 0.45; }
+
+/* mobile-only details */
+.xp__caption { display: none; }
+
+/* semantic list for accessibility / SEO */
+.xp__list {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  list-style: none;
+}
+
+/* ---------- no-WebGL fallback ---------- */
+.xp--fallback { height: auto; min-height: 0; padding: clamp(72px, 10vw, 140px) clamp(20px, 5vw, 64px); cursor: auto; touch-action: auto; user-select: auto; }
+.xp--fallback .xp__heading { position: static; transform: none !important; font-size: clamp(36px, 6vw, 72px) !important; margin-bottom: 24px; }
+.xp--fallback .xp__canvas,
+.xp--fallback .xp__title,
+.xp--fallback .xp__counter { display: none !important; }
+.xp--fallback .xp__list {
+  position: static;
+  width: auto; height: auto;
+  margin: 0 auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  display: grid;
+  gap: 24px;
+  max-width: 900px;
+}
+.xp--fallback .xp__list > li {
+  padding: 32px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.xp--fallback h3 { margin: 0 0 8px; font: 600 24px/1.2 var(--xp-sans); }
+.xp--fallback p  { margin: 0 0 16px; color: var(--xp-muted); }
+.xp--fallback ul { margin: 0; padding-left: 20px; line-height: 1.6; }
+
+/* ---------- responsive (phone portrait) ---------- */
+@media (max-width: 768px) {
+  .xp {
+    height: auto;
+    min-height: 0;
+    overflow: hidden;
+    padding-top: 80px; /* Fully clears the 60px fixed floating navbar */
+    padding-bottom: 40px; /* Clean breathing room before Education */
+  }
+  .xp__header {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 16px 12px;
+    pointer-events: none;
+  }
+  .xp__heading {
+    position: static;
+    margin: 0 0 6px;
+    font: 400 13px/1.2 var(--xp-serif);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(248, 250, 252, 0.50);
+  }
+  .xp__title {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .xp__name {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+    text-transform: uppercase;
+    height: 1.15em;
+  }
+  .xp__cat {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    margin-top: 4px;
+    color: rgba(255, 255, 255, 0.65);
+    text-transform: uppercase;
+    height: 1.4em;
+  }
+  .xp__stage {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 220px;
+    overflow: visible;
+    pointer-events: auto;
+    touch-action: pan-y;
+  }
+  .xp__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+  }
+  .xp__counter {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin: 10px auto 0;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    font: 500 12px/1.4 var(--xp-sans);
+    letter-spacing: 0.16em;
+    color: rgba(255, 255, 255, 0.70);
+    pointer-events: none;
+  }
+  .xp__caption {
+    position: relative;
+    z-index: 5;
+    display: block;
+    margin: 14px auto 0;
+    width: min(90vw, 360px);
+    padding: 0 8px;
+    pointer-events: none;
+    text-align: left;
+  }
+  .xp__cap {
+    font-family: var(--xp-sans);
+    color: var(--xp-fg);
+  }
+  .xp__cap-role {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+  }
+  .xp__cap-meta {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 8px;
+  }
+  .xp__cap-bullets {
+    margin: 0 0 8px;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+  }
+  .xp__cap-bullets li {
+    font-size: 12px;
+    line-height: 1.45;
+    color: rgba(248, 250, 252, 0.85);
+    position: relative;
+    padding-left: 14px;
+  }
+  .xp__cap-bullets li::before {
+    content: "•";
+    position: absolute;
+    left: 2px;
+    top: 0;
+    color: rgba(255, 255, 255, 0.45);
+  }
+  .xp__cap-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .xp__cap-chip {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 3px 9px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.80);
+  }
+}

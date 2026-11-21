@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from "react";
-import Background3D from "./components/Background3D";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import MainPage from "./components/MainPage";
 import CertificatesPage from "./components/CertificatesPage";
 import FloatingActions from "./components/FloatingActions";
-import SplashScreen from "./components/SplashScreen";
 
 export function App() {
   const [currentPage, setCurrentPage] = useState("home"); // "home" or "certificates-museum"
-  const [isSplashActive, setIsSplashActive] = useState(true);
 
-  // Guarantee page starts at top after splash screen finishes loading
+  // Ensure page starts at top on initial mount
   useEffect(() => {
-    if (!isSplashActive) {
-      window.scrollTo(0, 0);
-    }
-  }, [isSplashActive]);
+    window.scrollTo(0, 0);
+  }, []);
 
   // Function to smoothly scroll to elements
   const scrollToSection = (sectionId) => {
@@ -25,37 +20,37 @@ export function App() {
     }
   };
 
-  if (isSplashActive) {
-    return (
-      <SplashScreen 
-        onComplete={() => {
-          setIsSplashActive(false);
-        }} 
-      />
-    );
-  }
+  const handleNavigate = (id) => {
+    if (currentPage !== "home") {
+      setCurrentPage("home");
+      setTimeout(() => {
+        scrollToSection(id);
+      }, 100);
+    } else {
+      scrollToSection(id);
+    }
+  };
 
   return (
     <>
-      {/* Interactive Three.js particle background — outside all transforms */}
-      <Background3D />
-
-      {/* Navigation — must be outside .portfolio-app so position:fixed
-          anchors to the viewport (transforms break fixed positioning) */}
+      {/* Premium Glass Header & Circular Reveal Mobile Menu */}
       <Header
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        scrollToSection={scrollToSection}
+        name="Devakumar A."
+        resumeHref={`${import.meta.env.BASE_URL}assets/resume/Devakumar-A_Resume_Portfolio.pdf`}
+        onNavigate={handleNavigate}
       />
 
-      {/* Floating Buttons & Chatbot Panel — same reason as Header */}
+      {/* Floating Buttons & Chatbot Panel */}
       <FloatingActions />
 
       <div className="portfolio-app animate-fadeIn">
         {/* Dynamic Main Views */}
         <main>
           {currentPage === "home" ? (
-            <MainPage setCurrentPage={setCurrentPage} />
+            <MainPage 
+              setCurrentPage={setCurrentPage} 
+              scrollToSection={scrollToSection}
+            />
           ) : (
             <CertificatesPage />
           )}
@@ -64,4 +59,5 @@ export function App() {
     </>
   );
 }
+
 export default App;

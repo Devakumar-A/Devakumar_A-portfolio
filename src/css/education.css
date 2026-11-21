@@ -1,0 +1,359 @@
+/* ============ EDUCATION HORIZONTAL SCROLL SECTION ============ */
+#education {
+  --bg: #000000;
+  --text: #ffffff;
+  --muted: #a1a1aa;
+  --line: rgba(255, 255, 255, 0.12);
+  --a1: #ff3366; /* Rich Vivid Crimson Rose */
+  --a2: #ff9900; /* Rich Radiant Amber Gold */
+  --display: "Bricolage Grotesque", system-ui, sans-serif;
+  --body: "Figtree", system-ui, sans-serif;
+
+  position: relative;
+  background: #000000 !important;
+  color: var(--text);
+  font-family: var(--body);
+  /* 280vh runway provides ample room so even fast scrolling glides like butter */
+  height: 280vh;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+}
+
+#education,
+#education * {
+  box-sizing: border-box;
+}
+
+/* Sticky viewport that stays pinned during horizontal glide */
+.edu-sticky-frame {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(24px, 4vh, 44px) 0 clamp(20px, 3vh, 36px);
+  background: #000000;
+  isolation: isolate;
+  z-index: 1;
+}
+
+/* Rich ambient glows */
+.edu-sticky-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(700px 480px at 85% 75%, rgba(255, 51, 102, 0.16), transparent 70%),
+    radial-gradient(580px 420px at 12% 20%, rgba(255, 153, 0, 0.14), transparent 70%);
+  z-index: 0;
+}
+
+/* Top header */
+.edu-header {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 64px);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 2;
+}
+
+.edu-title {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(2.4rem, 6.5vw, 4.8rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin: 0;
+  color: #ffffff;
+}
+
+.edu-title .ch {
+  display: inline-block;
+}
+
+.edu-counter-badge {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.edu-counter-cur {
+  color: var(--a2);
+  font-size: 1.25em;
+}
+
+/* Horizontal slide wrapper */
+.edu-h-wrapper {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  z-index: 2;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.edu-h-wrapper.is-dragging {
+  cursor: grabbing;
+}
+
+.edu-h-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  gap: clamp(32px, 5vw, 80px);
+  padding: 0 max(24px, calc((100vw - min(940px, 86vw)) / 2));
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Slide Cards */
+.edu-slide {
+  flex: 0 0 auto;
+  width: min(940px, 86vw);
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 56px);
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: clamp(28px, 4vw, 52px);
+  position: relative;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 20px 48px -16px rgba(0, 0, 0, 0.7);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.edu-slide.active {
+  border-color: rgba(255, 51, 102, 0.4);
+  box-shadow: 0 24px 56px -16px rgba(255, 51, 102, 0.16), 0 0 0 1px rgba(255, 51, 102, 0.12);
+}
+
+/* Minimal Slide Text */
+.edu-main {
+  position: relative;
+}
+
+.edu-year {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 14px;
+  color: var(--a2);
+  font-size: 1rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+
+.edu-year::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--a1), var(--a2));
+}
+
+.edu-main h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  margin: 0 0 10px;
+  color: #ffffff;
+}
+
+.edu-main p.where {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+  line-height: 1.5;
+}
+
+/* Particle Canvas Wrapper */
+.cgpa {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.cgpa canvas {
+  display: block;
+  width: 100%;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.cgpa canvas:active {
+  cursor: grabbing;
+}
+
+.cgpa-label {
+  margin: 8px 0 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+/* HSC Score bar */
+.edu-score {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.edu-score .bar {
+  margin-top: 14px;
+  height: 3px;
+  background: var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.edu-score .bar i {
+  display: block;
+  height: 100%;
+  width: var(--w);
+  background: linear-gradient(90deg, var(--a1), var(--a2));
+  box-shadow: 0 0 16px rgba(255, 51, 102, 0.75), 0 0 28px rgba(255, 153, 0, 0.45);
+  transition: width 1.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s;
+}
+
+/* Bottom Progress Rail */
+.edu-bottom-bar {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  z-index: 2;
+}
+
+.edu-h-line {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background: var(--line);
+  border-radius: 2px;
+}
+
+.edu-h-line i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: var(--progress, 0%);
+  background: linear-gradient(90deg, var(--a1), var(--a2));
+  box-shadow: 0 0 16px rgba(255, 51, 102, 0.75), 0 0 28px rgba(255, 153, 0, 0.45);
+  will-change: width;
+}
+
+.edu-h-line b {
+  position: absolute;
+  top: -4px;
+  left: var(--progress, 0%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(255, 51, 102, 0.35), 0 0 22px 5px var(--a1), 0 0 32px var(--a2);
+  will-change: left;
+}
+
+.edu-scroll-hint {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.75;
+}
+
+/* ============ MOBILE BREAKPOINTS ============ */
+@media (max-width: 860px) {
+  #education {
+    height: 240vh;
+  }
+
+  .edu-sticky-frame {
+    padding: clamp(20px, 3vh, 32px) 0 clamp(16px, 2.5vh, 28px);
+  }
+
+  .edu-slide {
+    width: calc(100vw - 44px);
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 24px 20px;
+    border-radius: 20px;
+  }
+
+  .edu-h-track {
+    padding: 0 22px;
+    gap: 24px;
+  }
+
+  .edu-main h3 {
+    font-size: 1.25rem;
+    margin-bottom: 6px;
+  }
+
+  .edu-main p.where {
+    font-size: 0.92rem;
+  }
+
+  .edu-year {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+
+  .edu-bottom-bar {
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .edu-title {
+    font-size: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #education,
+  #education * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

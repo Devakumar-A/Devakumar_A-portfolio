@@ -1,0 +1,1650 @@
+/* ==============================================================================
+   DEVAKUMAR A. — CALM, ART-DIRECTED EDITORIAL SECTIONS (ABOUT & CERTIFICATIONS)
+   Palette:
+     Background: #050a19 (midnight navy)
+     Card Surface: #0a1124
+     Text Primary: #e8ecf4 (solid off-white)
+     Text Secondary: rgba(232, 236, 244, 0.65)
+     Text Labels: rgba(232, 236, 244, 0.4)
+     Accent: #5cc8d9 (muted cyan)
+     Dividers/Borders: 1px solid rgba(255, 255, 255, 0.12)
+   NO NEON: No glow, no text-shadow, no gradient text, no glassmorphism.
+============================================================================== */
+
+/* ------------------------------------------------------------------------------
+   00. BASE TOKENS & UTILITIES
+------------------------------------------------------------------------------ */
+.editorial-section {
+  position: relative;
+  background-color: #050a19;
+  color: #e8ecf4;
+  padding: 6.5rem 0;
+  /* >96px vertical padding */
+  overflow: hidden;
+}
+
+.editorial-section.surface-alt {
+  background-color: #050a19;
+}
+
+.editorial-container {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Ambient Background: Under 8% opacity drifting gradient */
+.editorial-ambient-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.editorial-ambient-orb {
+  position: absolute;
+  width: 65vw;
+  height: 65vw;
+  max-width: 800px;
+  max-height: 800px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(92, 200, 217, 0.05) 0%, rgba(20, 35, 75, 0.04) 50%, transparent 75%);
+  filter: blur(80px);
+  opacity: 0.6;
+}
+
+.editorial-ambient-orb-2 {
+  position: absolute;
+  right: -10%;
+  top: 40%;
+  width: 55vw;
+  height: 55vw;
+  max-width: 700px;
+  max-height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.04) 0%, rgba(10, 20, 50, 0.03) 60%, transparent 80%);
+  filter: blur(90px);
+  opacity: 0.5;
+}
+
+/* Focus Ring Utility */
+.editorial-focusable:focus-visible {
+  outline: 2px solid #5cc8d9 !important;
+  outline-offset: 2px !important;
+}
+
+/* ------------------------------------------------------------------------------
+   01. ABOUT SECTION — CINEMATIC EDITORIAL SECTION (GPU OPTIMIZED)
+------------------------------------------------------------------------------ */
+#about,
+.about-cinematic-section {
+  position: relative;
+  background-color: #000000 !important;
+  background: #000000 !important;
+  margin-top: -1px;
+  margin-bottom: 0 !important;
+  border-top: none;
+  border-bottom: none !important;
+  padding: clamp(32px, 3.8vw, 44px) 0 clamp(24px, 2.8vw, 32px);
+  overflow: hidden;
+  isolation: isolate;
+  contain: paint;
+}
+
+/* Background particle canvas */
+.about-particle-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Faint ambient radial lighting (zero blur raster cost) */
+.about-ambient-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.35;
+  z-index: 0;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.glow-top-left {
+  top: -5%;
+  left: -5%;
+  width: 620px;
+  height: 620px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.16) 0%, rgba(56, 189, 248, 0.05) 45%, transparent 70%);
+}
+
+.glow-bottom-right {
+  bottom: -5%;
+  right: -5%;
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, rgba(168, 85, 247, 0.05) 45%, transparent 70%);
+}
+
+.about-cinematic-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Two-column layout: Left ~42%, Right ~58% */
+.about-layout-grid {
+  display: grid;
+  grid-template-columns: 42% 1fr;
+  gap: 4.5rem;
+  align-items: center;
+}
+
+/* Left Column: Portrait Stage */
+.about-portrait-column {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.about-portrait-stage {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 4 / 5;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Orbital Rings layers (Dual-depth: back z=1, front z=4) */
+.about-rings-layer {
+  position: absolute;
+  inset: -60px -80px;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.about-rings-back {
+  z-index: 1;
+}
+
+.about-rings-front {
+  z-index: 4;
+}
+
+.about-ring-wrapper {
+  position: absolute;
+  width: 132%;
+  height: 112%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.about-ring-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.ring-cyan {
+  transform: rotate(-18deg);
+}
+
+.ring-violet {
+  transform: rotate(22deg);
+}
+
+.animated-ring-1 {
+  animation: ringPrecession1 12s ease-in-out infinite alternate;
+}
+
+.animated-ring-2 {
+  animation: ringPrecession2 14s ease-in-out infinite alternate;
+}
+
+@keyframes ringPrecession1 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-18deg) scale(0.98);
+  }
+
+  50% {
+    transform: translate3d(0, 0, 0) rotate(-12deg) scale(1.02);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-22deg) scale(1);
+  }
+}
+
+@keyframes ringPrecession2 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(22deg) scale(1.02);
+  }
+
+  50% {
+    transform: translate3d(0, 0, 0) rotate(27deg) scale(0.98);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotate(17deg) scale(1.01);
+  }
+}
+
+/* Streaming Orbital Energy Dashes */
+.orbit-stream-cyan {
+  stroke-dasharray: 10 7;
+  animation: streamOrbitCyan 7s linear infinite;
+}
+
+.orbit-stream-violet {
+  stroke-dasharray: 8 6;
+  animation: streamOrbitViolet 9s linear infinite;
+}
+
+@keyframes streamOrbitCyan {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: -340;
+  }
+}
+
+@keyframes streamOrbitViolet {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: -340;
+  }
+}
+
+/* Translucent Glass Backing Panels with breathing float (GPU Compositor only) */
+.about-glass-backdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.backdrop-violet {
+  top: -24px;
+  right: -28px;
+  transform: translate3d(0, 0, 0) rotate(2.5deg);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(10, 17, 36, 0.72) 100%);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  animation: floatBackdropViolet 9s ease-in-out infinite alternate;
+}
+
+.backdrop-cyan {
+  bottom: -22px;
+  left: -28px;
+  transform: translate3d(0, 0, 0) rotate(-7deg);
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.06) 0%, rgba(10, 17, 36, 0.72) 100%);
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  animation: floatBackdropCyan 10s ease-in-out infinite alternate;
+}
+
+@keyframes floatBackdropViolet {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(2.5deg);
+  }
+
+  100% {
+    transform: translate3d(5px, -6px, 0) rotate(4deg);
+  }
+}
+
+@keyframes floatBackdropCyan {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-7deg);
+  }
+
+  100% {
+    transform: translate3d(-5px, 6px, 0) rotate(-5.5deg);
+  }
+}
+
+/* Main Tilted Portrait Frame with Living Neon Aura (Compositor Accelerated) */
+.about-frame-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  transform: translate3d(0, 0, 0) rotate(-3.5deg);
+  border-radius: 24px;
+  padding: 1.5px;
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.9) 0%, rgba(56, 189, 248, 0.4) 40%, rgba(168, 85, 247, 0.9) 100%);
+  box-shadow: 0 0 28px rgba(34, 211, 238, 0.28), 0 0 55px rgba(168, 85, 247, 0.2), 0 20px 45px rgba(0, 0, 0, 0.65);
+  transition: transform 0.4s ease;
+  will-change: transform;
+}
+
+.about-frame-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 25px;
+  background: inherit;
+  filter: blur(12px);
+  opacity: 0.35;
+  z-index: -1;
+  animation: frameAuraBreathe 6s ease-in-out infinite alternate;
+  will-change: opacity;
+}
+
+@keyframes frameAuraBreathe {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 0.55;
+  }
+}
+
+.about-frame-wrapper:hover {
+  transform: translate3d(0, 0, 0) rotate(-2.5deg) scale(1.01);
+}
+
+.about-frame-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 22.5px;
+  overflow: hidden;
+  background-color: #0a1124;
+  position: relative;
+}
+
+.about-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+
+/* Floating Identity Card (Overlapping lower-right - Compositor Accelerated) */
+.about-identity-card {
+  position: absolute;
+  bottom: 35px;
+  right: -25px;
+  z-index: 5;
+  background: rgba(10, 17, 36, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  padding: 10px 16px 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(34, 211, 238, 0.15);
+  animation: identityCardFloat 6s ease-in-out infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes identityCardFloat {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -7px, 0);
+  }
+}
+
+.identity-card-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(34, 211, 238, 0.12);
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #22d3ee;
+  flex-shrink: 0;
+}
+
+.identity-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.identity-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e8ecf4;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.identity-role {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(232, 236, 244, 0.72);
+  letter-spacing: 0.02em;
+}
+
+/* Right Column: Editorial Narrative */
+.about-content-column {
+  display: flex;
+  flex-direction: column;
+  z-index: 3;
+}
+
+/* Eyebrow with gradient indicator line */
+.about-eyebrow-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.about-eyebrow-line {
+  width: 32px;
+  height: 2px;
+  background: linear-gradient(90deg, #22d3ee 0%, #a855f7 100%);
+  border-radius: 2px;
+}
+
+.about-eyebrow-text {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5cc8d9;
+}
+
+/* Heading with gradient on 'with purpose.' */
+.about-heading-title {
+  font-size: clamp(38px, 4.4vw, 56px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #e8ecf4;
+  margin: 0 0 1.75rem 0;
+}
+
+.about-heading-line {
+  width: auto;
+  height: auto;
+  display: block;
+}
+
+.about-heading-word {
+  display: inline-block;
+}
+
+.heading-gradient {
+  background: linear-gradient(135deg, #22d3ee 0%, #38bdf8 35%, #c084fc 70%, #a855f7 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerFlow 5s ease-in-out infinite alternate;
+}
+
+@keyframes shimmerFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Two Editorial Paragraphs */
+.about-paragraphs-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  margin-bottom: 0.75rem;
+  max-width: 620px;
+}
+
+.about-paragraph {
+  font-size: 1.05rem;
+  line-height: 1.68;
+  color: rgba(232, 236, 244, 0.72);
+  margin: 0;
+}
+
+/* ==============================================================================
+   VERTICAL ROLLING WORD LIST ("I work across" + rotating wheel of 10 domains)
+============================================================================== */
+.about-rolling-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  margin-top: 0.25rem;
+  margin-bottom: 1.75rem;
+  position: relative;
+  z-index: 5;
+}
+
+.about-rolling-static {
+  font-size: clamp(20px, 2.2vw, 25px);
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+
+.about-rolling-wheel {
+  position: relative;
+  height: 126px;
+  /* 3 visible rows * 42px */
+  width: 340px;
+  flex: 0 0 340px;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 28%, #000 72%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 28%, #000 72%, transparent 100%);
+}
+
+.about-rolling-wheel:focus-visible {
+  outline: 1px solid rgba(34, 211, 238, 0.4);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.rolling-word-row {
+  position: absolute;
+  top: 42px;
+  /* Row 1 (center line): 1 * 42px */
+  left: 0;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  font-size: clamp(18px, 1.8vw, 22px);
+  font-weight: 500;
+  color: rgba(232, 236, 244, 0.5);
+  white-space: nowrap;
+  transform-origin: left center;
+  -webkit-transform-origin: left center;
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+  will-change: transform, opacity;
+}
+
+.rolling-word-row.is-active {
+  font-weight: 600;
+}
+
+.rolling-word-name {
+  display: inline-block;
+  line-height: 1.2;
+}
+
+.rolling-word-row.is-active .rolling-word-name {
+  background: linear-gradient(135deg, #22d3ee 0%, #38bdf8 35%, #c084fc 70%, #a855f7 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmerFlow 5s ease-in-out infinite alternate;
+}
+
+.rolling-word-detail {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: rgba(232, 236, 244, 0.45);
+  margin-left: 8px;
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 640px) {
+  .rolling-word-detail {
+    display: none;
+  }
+}
+
+.rolling-word-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  color: rgba(232, 236, 244, 0.4);
+  transition: color 0.3s ease;
+}
+
+.rolling-word-row.is-active .rolling-word-icon {
+  color: #22d3ee;
+  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.6));
+}
+
+/* Reduced Motion fallback: plain static vertical list */
+.about-rolling-static-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 1.75rem;
+  margin-bottom: 2.25rem;
+}
+
+.about-rolling-reduced-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.25rem;
+}
+
+.about-rolling-reduced-item {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #e8ecf4;
+  opacity: 1;
+}
+
+.about-rolling-reduced-item .rolling-word-icon {
+  color: #22d3ee;
+  margin-left: 8px;
+}
+
+/* Screen reader only utility (WCAG accessibility) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Signature Block (Bottom-Left) */
+.about-signature-block {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2.25rem;
+}
+
+.signature-dot-wrapper {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signature-dot-outer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(34, 211, 238, 0.25);
+  animation: signaturePulse 2.5s infinite ease-in-out;
+}
+
+.signature-dot-inner {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22d3ee;
+  box-shadow: 0 0 10px #22d3ee;
+}
+
+@keyframes signaturePulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: scale(1.6);
+    opacity: 0.8;
+  }
+}
+
+.signature-connector-line {
+  width: 38px;
+  height: 1px;
+  background: rgba(34, 211, 238, 0.4);
+}
+
+.signature-text {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(232, 236, 244, 0.55);
+}
+
+/* ------------------------------------------------------------------------------
+   03. CERTIFICATIONS SECTION & PAGE
+------------------------------------------------------------------------------ */
+.cert-header-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2.5rem;
+  margin-bottom: 3.5rem;
+  flex-wrap: wrap;
+}
+
+.cert-header-main {
+  max-width: 680px;
+}
+
+.cert-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5cc8d9;
+  margin-bottom: 1rem;
+}
+
+.cert-heading {
+  font-size: clamp(32px, 4vw, 54px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #e8ecf4;
+  margin: 0 0 1.25rem 0;
+}
+
+.cert-intro {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(232, 236, 244, 0.65);
+  margin: 0;
+}
+
+/* Stat line */
+.cert-stats-strip {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1.25rem;
+  background-color: #0a1124;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: rgba(232, 236, 244, 0.65);
+  flex-wrap: wrap;
+}
+
+.cert-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cert-stat-num {
+  font-weight: 600;
+  color: #e8ecf4;
+  font-variant-numeric: tabular-nums;
+}
+
+.cert-stat-divider {
+  width: 1px;
+  height: 14px;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ------------------------------------------------------------------------------
+   04. STICKY FILTER BAR (Radiogroup)
+------------------------------------------------------------------------------ */
+.cert-filter-sticky-wrapper {
+  position: sticky;
+  top: 64px;
+  /* below navbar */
+  z-index: 40;
+  background-color: rgba(5, 10, 25, 0.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 0 0 3.5rem 0;
+}
+
+.cert-filter-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0.75rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.cert-filter-container::-webkit-scrollbar {
+  display: none;
+}
+
+.cert-radiogroup {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  white-space: nowrap;
+}
+
+.cert-radio-btn {
+  background: transparent;
+  border: none;
+  color: rgba(232, 236, 244, 0.6);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s ease;
+  outline: none;
+}
+
+.cert-radio-btn:hover {
+  color: #e8ecf4;
+}
+
+.cert-radio-btn.is-active {
+  color: #e8ecf4;
+  font-weight: 600;
+}
+
+.cert-radio-btn::after {
+  content: "";
+  position: absolute;
+  bottom: -0.75rem;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.cert-radio-btn.is-active::after {
+  background-color: #5cc8d9;
+}
+
+.cert-live-count {
+  font-size: 0.8rem;
+  color: rgba(232, 236, 244, 0.4);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------------------
+   05. TYPOGRAPHIC ISSUER MARK
+------------------------------------------------------------------------------ */
+.issuer-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.issuer-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #050a19;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #5cc8d9;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.issuer-name {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(232, 236, 244, 0.7);
+}
+
+/* ------------------------------------------------------------------------------
+   06. SECTION 01 — FEATURED DISTINCTIONS (Asymmetric)
+------------------------------------------------------------------------------ */
+.cert-tier-block {
+  margin-bottom: 5.5rem;
+}
+
+.cert-tier-header {
+  margin-bottom: 1.75rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.85rem;
+}
+
+.cert-tier-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5cc8d9;
+  margin: 0;
+}
+
+.cert-tier-subline {
+  font-size: 0.85rem;
+  color: rgba(232, 236, 244, 0.4);
+  margin: 0;
+}
+
+.cert-empty-note {
+  padding: 2.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: rgba(232, 236, 244, 0.4);
+  background-color: #0a1124;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+
+/* Featured Layout: 12 cols (A: 7 cols, B: 5 cols, C: 12 cols) */
+.featured-distinctions-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+}
+
+.featured-card-base {
+  background-color: #0a1124;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  padding: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  position: relative;
+}
+
+.featured-card-base:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.featured-card-base:hover .issuer-circle {
+  transform: scale(1.05);
+}
+
+.featured-card-a {
+  grid-column: span 7;
+  min-height: 340px;
+}
+
+.featured-card-b {
+  grid-column: span 5;
+  min-height: 340px;
+}
+
+.featured-card-c {
+  grid-column: span 12;
+}
+
+.featured-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.featured-score-big {
+  font-size: clamp(84px, 7.5vw, 120px);
+  font-weight: 600;
+  line-height: 0.95;
+  color: #e8ecf4;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.featured-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #e8ecf4;
+  margin: 0 0 0.5rem 0;
+}
+
+.featured-highlight-text {
+  font-size: 0.95rem;
+  color: #5cc8d9;
+  letter-spacing: 0.02em;
+  margin: 0 0 1.5rem 0;
+}
+
+.featured-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cert-btn-action {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+  color: #e8ecf4;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+}
+
+.cert-btn-action:hover {
+  border-color: #5cc8d9;
+  color: #5cc8d9;
+}
+
+/* Oracle Card C — Three Credentials */
+.oracle-credentials-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.oracle-credential-col {
+  padding: 1.25rem;
+  background-color: #050a19;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.oracle-credential-col-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e8ecf4;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.35;
+}
+
+.oracle-credential-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.oracle-tag {
+  font-size: 11px;
+  color: rgba(232, 236, 244, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ------------------------------------------------------------------------------
+   07. SECTION 02 — PROFESSIONAL CREDENTIALS (Compact List)
+------------------------------------------------------------------------------ */
+.prof-list-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 2.5rem;
+}
+
+.prof-row-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  text-align: left;
+}
+
+.prof-row-item:hover,
+.prof-row-item:focus-visible {
+  transform: translateX(4px);
+}
+
+.prof-row-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.prof-row-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #e8ecf4;
+  transition: color 0.2s ease;
+}
+
+.prof-row-item:hover .prof-row-title,
+.prof-row-item:focus-visible .prof-row-title {
+  color: #5cc8d9;
+}
+
+.prof-row-category {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(232, 236, 244, 0.4);
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------------------
+   08. SECTION 03 — ADDITIONAL LEARNING (Search + Collapsible)
+------------------------------------------------------------------------------ */
+.addl-search-bar {
+  margin-bottom: 1.5rem;
+}
+
+.addl-search-input {
+  width: 100%;
+  max-width: 420px;
+  background-color: #0a1124;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  color: #e8ecf4;
+  transition: border-color 0.2s ease;
+}
+
+.addl-search-input:focus {
+  outline: none;
+  border-color: #5cc8d9;
+}
+
+.addl-search-input::placeholder {
+  color: rgba(232, 236, 244, 0.35);
+}
+
+.addl-rows-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.addl-row-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  text-align: left;
+}
+
+.addl-row-item:hover,
+.addl-row-item:focus-visible {
+  transform: translateX(4px);
+}
+
+.addl-row-title {
+  font-size: 0.925rem;
+  font-weight: 500;
+  color: rgba(232, 236, 244, 0.85);
+  transition: color 0.2s ease;
+}
+
+.addl-row-item:hover .addl-row-title,
+.addl-row-item:focus-visible .addl-row-title {
+  color: #5cc8d9;
+}
+
+.addl-disclosure-btn {
+  margin-top: 1.5rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 4px;
+  color: #e8ecf4;
+  font-size: 0.85rem;
+  padding: 0.6rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.addl-disclosure-btn:hover {
+  border-color: #5cc8d9;
+  color: #5cc8d9;
+}
+
+/* ------------------------------------------------------------------------------
+   09. PREVIEW MODAL (Accessible Dialog)
+------------------------------------------------------------------------------ */
+.editorial-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(5, 10, 25, 0.85);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.editorial-modal-card {
+  width: 100%;
+  max-width: 640px;
+  background-color: #0a1124;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 6px;
+  padding: 2.25rem;
+  position: relative;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+  outline: none;
+}
+
+.editorial-modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: transparent;
+  border: none;
+  color: rgba(232, 236, 244, 0.6);
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.editorial-modal-close:hover {
+  color: #e8ecf4;
+}
+
+.editorial-modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #e8ecf4;
+  margin: 0.75rem 0 0.5rem 0;
+}
+
+.editorial-modal-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.editorial-modal-tag {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #5cc8d9;
+  background-color: #050a19;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  border: 1px solid rgba(92, 200, 217, 0.2);
+}
+
+.editorial-modal-highlight {
+  font-size: 0.95rem;
+  color: #e8ecf4;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  background-color: #050a19;
+  border-left: 2px solid #5cc8d9;
+}
+
+/* Neutral Not-Added-Yet Panel */
+.cert-not-added-panel {
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+  background-color: #050a19;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  margin: 1.5rem 0;
+}
+
+.cert-not-added-text {
+  font-size: 0.95rem;
+  color: rgba(232, 236, 244, 0.45);
+  margin: 0;
+}
+
+.editorial-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ------------------------------------------------------------------------------
+   10. RESPONSIVE MEDIA QUERIES (360, 640, 768, 1024, 1280, 1440, 1920)
+------------------------------------------------------------------------------ */
+@media (max-width: 1024px) {
+  .about-layout-grid {
+    gap: 3.5rem;
+  }
+
+  .about-portrait-stage {
+    max-width: 380px;
+  }
+
+  .featured-card-a {
+    grid-column: span 12;
+  }
+
+  .featured-card-b {
+    grid-column: span 12;
+    min-height: auto;
+  }
+
+  .oracle-credentials-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .editorial-section {
+    padding: 4.5rem 0;
+  }
+
+  .editorial-container {
+    padding: 0 1.25rem;
+  }
+
+  /* Mobile About Single Column */
+  .about-cinematic-section {
+    padding: 24px 0 24px;
+    margin-bottom: 0 !important;
+  }
+
+  .about-cinematic-container {
+    padding: 0 1.25rem;
+  }
+
+  .about-layout-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .about-content-column {
+    order: 1;
+  }
+
+  .about-portrait-column {
+    order: 2;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-portrait-stage {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .about-rings-layer {
+    inset: -35px -45px;
+  }
+
+  .backdrop-violet {
+    top: -16px;
+    right: -18px;
+  }
+
+  .backdrop-cyan {
+    bottom: -16px;
+    left: -18px;
+  }
+
+  .about-identity-card {
+    bottom: 14px;
+    right: 8px;
+    padding: 8px 12px;
+    gap: 10px;
+    max-width: calc(100% - 16px);
+  }
+
+  .identity-card-badge {
+    width: 30px;
+    height: 30px;
+  }
+
+  .identity-name {
+    font-size: 14px;
+  }
+
+  .identity-role {
+    font-size: 11px;
+  }
+
+  .about-heading-title {
+    font-size: clamp(28px, 7.5vw, 36px);
+    margin-bottom: 1.25rem;
+  }
+
+  .about-paragraphs-block {
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .about-paragraph {
+    font-size: 0.95rem;
+    line-height: 1.62;
+  }
+
+  .about-rolling-wrapper {
+    justify-content: center;
+    margin-top: 0.25rem;
+    margin-bottom: 1.5rem;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .about-rolling-wheel {
+    height: 108px;
+    width: 250px;
+    flex: 0 0 250px;
+  }
+
+  .rolling-word-row {
+    top: 36px;
+    /* 1 * 36px (center line) */
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .about-signature-block {
+    margin-top: 2.5rem;
+    gap: 0.75rem;
+  }
+
+  .signature-text {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+  }
+
+  /* Mobile Certifications */
+  .cert-header-block {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .cert-stats-strip {
+    width: 100%;
+  }
+
+  .featured-score-big {
+    font-size: 84px;
+  }
+
+  .prof-list-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .editorial-modal-card {
+    height: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+    overflow-y: auto;
+    padding: 1.5rem;
+  }
+
+  .editorial-modal-backdrop {
+    padding: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-rolling-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 0.25rem;
+    margin-bottom: 1.25rem;
+    width: 100%;
+  }
+
+  .about-rolling-static {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .about-rolling-wheel {
+    height: 108px;
+    width: 215px;
+    flex: 0 0 215px;
+    max-width: none;
+  }
+
+  .rolling-word-row {
+    top: 36px;
+    height: 36px;
+    font-size: 14.5px;
+  }
+}
+
+@media (max-width: 360px) {
+  .about-rolling-wrapper {
+    gap: 6px;
+    justify-content: center;
+  }
+
+  .about-rolling-static {
+    font-size: 15px;
+  }
+
+  .about-rolling-wheel {
+    width: 195px;
+    flex: 0 0 195px;
+  }
+
+  .rolling-word-row {
+    font-size: 13.5px;
+  }
+
+  .rolling-word-icon {
+    margin-left: 5px;
+  }
+
+  .rolling-word-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .about-portrait-stage {
+    max-width: 270px;
+  }
+
+  .about-identity-card {
+    right: 4px;
+    bottom: 8px;
+    padding: 6px 10px;
+  }
+
+  .identity-name {
+    font-size: 13px;
+  }
+
+  .identity-role {
+    font-size: 10.5px;
+  }
+
+  .about-heading-title {
+    font-size: 25px;
+  }
+
+  .featured-score-big {
+    font-size: 64px;
+  }
+}

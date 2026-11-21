@@ -1,0 +1,272 @@
+/* ==============================================================================
+   DEVAKUMAR A. — NEXT-GENERATION CINEMATIC DESIGN SYSTEM
+   Visual Identity: Cinematic Futuristic AI Engineering Experience
+============================================================================== */
+
+:root {
+  /* Core Surface Colors */
+  --c-bg-primary: #030614;
+  --c-bg-secondary: #080D20;
+  --c-bg-tertiary: #0D142E;
+  --c-bg-card: rgba(13, 20, 46, 0.65);
+  --c-bg-card-hover: rgba(18, 28, 64, 0.85);
+
+  /* Primary Brand Accents */
+  --c-purple: #8B5CF6;
+  --c-violet: #A855F7;
+  --c-blue: #2563EB;
+  --c-cyan: #22D3EE;
+  --c-emerald: #10B981;
+
+  /* Text & Readability */
+  --c-text-primary: #F8FAFC;
+  --c-text-secondary: #A1A1AA;
+  --c-text-tertiary: #64748B;
+  --c-text-muted: #475569;
+
+  /* Glassmorphism & Hairline Borders */
+  --c-border-subtle: rgba(255, 255, 255, 0.08);
+  --c-border-medium: rgba(255, 255, 255, 0.16);
+  --c-border-accent-cyan: rgba(34, 211, 238, 0.35);
+  --c-border-accent-purple: rgba(168, 85, 247, 0.35);
+
+  /* Elevation Shadows & Atmosphere */
+  --c-shadow-card: 0 20px 50px rgba(0, 0, 0, 0.6);
+  --c-shadow-glow-cyan: 0 0 30px rgba(34, 211, 238, 0.2);
+  --c-shadow-glow-purple: 0 0 35px rgba(168, 85, 247, 0.22);
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Space Grotesk', -apple-system, sans-serif;
+  --font-mono: 'Share Tech Mono', 'JetBrains Mono', monospace;
+
+  /* Transitions */
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-base: 0.35s;
+}
+
+/* ==============================================================================
+   RESET & FOUNDATION
+============================================================================== */
+html {
+  background-color: var(--c-bg-primary) !important;
+  color: var(--c-text-primary);
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: transparent !important;
+  color: var(--c-text-primary);
+  overflow-x: clip;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.25);
+  color: #FFFFFF;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: var(--c-bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 211, 238, 0.6);
+}
+
+/* ==============================================================================
+   LAYOUT & CONTAINER ARCHITECTURE
+============================================================================== */
+.cinematic-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  width: 100%;
+}
+
+.cinematic-section {
+  position: relative;
+  padding: 7.5rem 0;
+  background-color: var(--c-bg-primary);
+  overflow: hidden;
+}
+
+.cinematic-section.alt-bg {
+  background-color: var(--c-bg-secondary);
+}
+
+/* Section Header Structure */
+.section-header-block {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 4.5rem auto;
+  position: relative;
+  z-index: 2;
+}
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.95rem;
+  border-radius: 999px;
+  background: rgba(34, 211, 238, 0.08);
+  border: 1px solid var(--c-border-accent-cyan);
+  color: var(--c-cyan);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.12);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--c-text-primary);
+  margin-bottom: 1.1rem;
+  letter-spacing: -0.02em;
+}
+
+.section-title .text-gradient {
+  background: linear-gradient(135deg, var(--c-cyan) 0%, #60A5FA 45%, var(--c-violet) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-subtitle {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--c-text-secondary);
+  margin: 0 auto;
+}
+
+/* Glass Card Foundation */
+.glass-panel {
+  background: var(--c-bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--c-border-subtle);
+  border-radius: 20px;
+  box-shadow: var(--c-shadow-card);
+  transition: all var(--duration-base) var(--ease-cinematic);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-panel:hover {
+  background: var(--c-bg-card-hover);
+  border-color: var(--c-border-medium);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 30px rgba(34, 211, 238, 0.08);
+}
+
+/* Glowing Top Accent on Panels */
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 15%;
+  width: 70%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--c-cyan), var(--c-purple), transparent);
+  opacity: 0.45;
+  transition: opacity var(--duration-base) ease;
+}
+
+.glass-panel:hover::before {
+  opacity: 0.95;
+}
+
+/* Interactive Magnetic / Glow Buttons */
+.btn-cinematic-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.85rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--c-blue) 0%, #4F46E5 50%, var(--c-purple) 100%);
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.35);
+  transition: all 0.3s var(--ease-cinematic);
+}
+
+.btn-cinematic-primary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 16px 40px rgba(139, 92, 246, 0.45), 0 0 25px rgba(34, 211, 238, 0.3);
+  color: #FFFFFF;
+}
+
+.btn-cinematic-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--c-text-primary);
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: 1px solid var(--c-border-subtle);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: all 0.28s var(--ease-cinematic);
+}
+
+.btn-cinematic-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--c-border-accent-cyan);
+  transform: translateY(-3px);
+  color: #FFFFFF;
+}
+
+/* Subtle Ambient Glows */
+.ambient-glow-circle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(120px);
+  z-index: 1;
+  opacity: 0.15;
+}
+
+/* ==============================================================================
+   RESPONSIVE UTILITIES
+============================================================================== */
+@media (max-width: 768px) {
+  .cinematic-section {
+    padding: 5rem 0;
+  }
+  .section-header-block {
+    margin-bottom: 3rem;
+  }
+  .section-title {
+    font-size: 2.1rem;
+  }
+}
