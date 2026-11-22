@@ -219,27 +219,36 @@
         place-items: center;
         background: #000000;
         pointer-events: all;
-        animation: sp-out .5s cubic-bezier(.22, 1, .36, 1) 2.0s forwards;
+        cursor: pointer;
+        animation: sp-out 0.8s cubic-bezier(0.22, 1, 0.36, 1) 3.8s forwards;
       }
       #splash svg {
-        width: min(78vw, 520px);
+        width: min(80vw, 540px);
         height: auto;
         overflow: visible;
-        fill: #f1f1ee;
-        -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent 60%);
-        mask-image: linear-gradient(90deg, #000 40%, transparent 60%);
-        -webkit-mask-size: 300% 100%;
-        mask-size: 300% 100%;
+        fill: #ffffff;
+        filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.22));
+        -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 48%, rgba(0, 0, 0, 0.7) 49.5%, rgba(0, 0, 0, 0.1) 51%, transparent 52%);
+        mask-image: linear-gradient(90deg, #000 0%, #000 48%, rgba(0, 0, 0, 0.7) 49.5%, rgba(0, 0, 0, 0.1) 51%, transparent 52%);
+        -webkit-mask-size: 260% 100%;
+        mask-size: 260% 100%;
         -webkit-mask-repeat: no-repeat;
         mask-repeat: no-repeat;
         -webkit-mask-position: 100% 0;
         mask-position: 100% 0;
-        animation: sp-write 1.4s cubic-bezier(.55, .1, .35, 1) .25s forwards;
+        will-change: mask-position, -webkit-mask-position;
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+        animation: sp-write 2.8s cubic-bezier(0.35, 0, 0.25, 1) 0.4s forwards;
       }
       @keyframes sp-write {
-        to {
-          -webkit-mask-position: 0 0;
-          mask-position: 0 0;
+        0% {
+          -webkit-mask-position: 100% 0;
+          mask-position: 100% 0;
+        }
+        100% {
+          -webkit-mask-position: 0% 0;
+          mask-position: 0% 0;
         }
       }
       @keyframes sp-out {
@@ -259,7 +268,7 @@
       }
     </style>
     <script>
-      /* show once per browser session */
+      /* show once per browser session + tap to skip */
       try {
         if (sessionStorage.getItem("sp")) {
           document.documentElement.classList.add("sp-skip");
@@ -267,6 +276,17 @@
           sessionStorage.setItem("sp", "1");
         }
       } catch (e) {}
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const sp = document.getElementById("splash");
+        if (sp) {
+          sp.addEventListener("click", () => {
+            sp.style.transition = "opacity 0.3s ease";
+            sp.style.opacity = "0";
+            setTimeout(() => { sp.style.display = "none"; }, 300);
+          });
+        }
+      });
     </script>
   </head>
   <body>
