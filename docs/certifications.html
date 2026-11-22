@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Devakumar A — Certifications</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --nav: 0px; /* set to your fixed navbar height when embedding, e.g. 80px */
+  --ink: #F4F6FF;
+  --soft: rgba(244, 246, 255, 0.65);
+  --g: #3D5BFF;
+  --cw: clamp(204px, min(74vw, calc((100svh - var(--nav) - 380px) / 1.42)), 300px);
+  --ch: calc(var(--cw) * 1.42);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+body {
+  background: #050833;
+  color: var(--ink);
+  font-family: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: radial-gradient(120% 80% at 50% 30%, #14229A 0%, #0A1166 40%, #050833 100%);
+}
+
+#sky {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glow {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: min(900px, 150vw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: var(--g);
+  opacity: 0.5;
+  transition: background-color 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
+  filter: blur(40px);
+  z-index: 0;
+}
+
+header {
+  position: relative;
+  z-index: 2;
+  padding: calc(var(--nav) + clamp(18px, 4vw, 40px)) clamp(20px, 5vw, 56px) 0;
+}
+
+h1 {
+  font-size: clamp(34px, 9.4vw, 72px);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+  font-variation-settings: "opsz" 96;
+  color: #FFFFFF;
+}
+
+header p {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(18px, 4.6vw, 24px);
+  color: var(--soft);
+  margin-top: 8px;
+}
+
+.stage {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: calc(var(--ch) + 100px);
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+  overflow: clip;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+}
+
+.stage.drag {
+  cursor: grabbing;
+}
+
+.stage:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: -6px;
+  border-radius: 24px;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.floor {
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  width: min(640px, 90vw);
+  height: 70px;
+  transform: translateX(-50%);
+  background: var(--g);
+  opacity: 0.38;
+  transition: background-color 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: blur(28px);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--cw);
+  height: var(--ch);
+  margin: calc(var(--ch) / -2) 0 0 calc(var(--cw) / -2);
+  border-radius: 30px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.28) inset, 0 40px 70px -30px rgba(0, 0, 20, 0.9);
+  transition: box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card.on {
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.65) inset, 0 0 60px -6px var(--g), 0 40px 70px -30px rgba(0, 0, 20, 0.9);
+}
+
+.card.ai {
+  background: linear-gradient(160deg, #8CA0FF 0%, #2440F0 58%, #16219A 100%);
+}
+
+.card.data {
+  background: linear-gradient(160deg, #5CF0DB 0%, #0E9F8E 58%, #0A5F66 100%);
+}
+
+.card.web {
+  background: linear-gradient(160deg, #FFB49B 0%, #FF5A47 58%, #B8301F 100%);
+}
+
+.card.sec {
+  background: linear-gradient(160deg, #8D9BE0 0%, #34408A 58%, #161C52 100%);
+}
+
+/* Holographic rainbow foil streak */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  opacity: var(--fo, 0.5);
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.75) 40%,
+    rgba(255, 226, 140, 0.65) 46%,
+    rgba(130, 255, 225, 0.65) 52%,
+    rgba(170, 150, 255, 0.65) 58%,
+    transparent 70%
+  );
+  background-size: 280% 100%;
+  background-position: var(--fx, 50%) 0;
+}
+
+/* Darkening overlay away from front (up to 70%) */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #02051F;
+  opacity: var(--d, 0);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Orbit motif in top-right corner */
+.orb {
+  position: absolute;
+  right: -38%;
+  top: -16%;
+  width: 92%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  background: repeating-radial-gradient(
+    circle,
+    transparent 0 calc(var(--cw) * 0.075),
+    rgba(255, 255, 255, 0.2) calc(var(--cw) * 0.075) calc(var(--cw) * 0.075 + 1px)
+  );
+}
+
+.orb i {
+  position: absolute;
+  inset: 0;
+  animation: spin 9s linear infinite;
+  animation-play-state: paused;
+}
+
+.orb i::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: calc(var(--cw) * 0.05);
+  aspect-ratio: 1;
+  margin-left: calc(var(--cw) * -0.025);
+  margin-top: calc(var(--cw) * -0.025);
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 0 14px 3px rgba(255, 255, 255, 0.85);
+}
+
+.card.on .orb i {
+  animation-play-state: running;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.iss, .bd, .card h2, .card small {
+  position: relative;
+  z-index: 2;
+}
+
+.iss {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-size: calc(var(--cw) * 0.088);
+  line-height: 1.1;
+  max-width: 68%;
+  color: #FFFFFF;
+}
+
+/* Large semi-transparent score watermark */
+.bd {
+  position: absolute;
+  left: 22px;
+  top: calc(var(--cw) * 0.2);
+  font-family: "Bricolage Grotesque", system-ui, sans-serif;
+  font-weight: 800;
+  font-size: calc(var(--cw) * 0.22);
+  letter-spacing: -0.06em;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.38);
+  text-shadow: 0 4px 24px rgba(0, 0, 30, 0.35);
+  pointer-events: none;
+}
+
+.card h2 {
+  margin-top: auto;
+  font-family: "Bricolage Grotesque", system-ui, sans-serif;
+  font-size: calc(var(--cw) * 0.118);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.03;
+  font-variation-settings: "opsz" 48;
+  color: #FFFFFF;
+}
+
+.card small {
+  display: block;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.88;
+  color: #FFFFFF;
+}
+
+/* Controls */
+.ctrl {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 4px 20px clamp(20px, 4vw, 36px);
+}
+
+.ticks {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: 22px;
+}
+
+.ticks span {
+  width: 3px;
+  height: 9px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.28);
+  transition: height 0.35s ease, background-color 0.35s ease;
+}
+
+.ticks span.on {
+  height: 22px;
+  background: #FFFFFF;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 6vw, 40px);
+}
+
+.mid {
+  min-width: 120px;
+  text-align: center;
+}
+
+.pos {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.pos b {
+  color: var(--ink);
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.cat {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 2px;
+  color: var(--ink);
+}
+
+.row button {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.row button:hover {
+  background: #FFFFFF;
+  color: #0A1166;
+}
+
+.row button:active {
+  transform: scale(0.92);
+}
+
+.row button:focus-visible {
+  outline: 3px solid #FF7A68;
+  outline-offset: 3px;
+}
+
+.row svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+@media (min-width: 900px) {
+  .stage {
+    perspective: 1700px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb i {
+    animation: none;
+  }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="glow" id="glow"></div>
+
+  <header>
+    <h1>Certifications</h1>
+    <p>Seventeen credentials. Drag to orbit.</p>
+  </header>
+
+  <div class="stage" id="stage" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Certifications, drag or use the left and right arrow keys">
+    <div class="floor" id="floor"></div>
+    <div class="ring" id="ring"></div>
+  </div>
+
+  <div class="ctrl">
+    <div class="ticks" id="ticks" aria-hidden="true"></div>
+    <div class="row">
+      <button id="prev" aria-label="Previous certificate">
+        <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <div class="mid">
+        <div class="pos" id="pos"></div>
+        <div class="cat" id="cat"></div>
+      </div>
+      <button id="next" aria-label="Next certificate">
+        <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="sr" id="live" aria-live="polite"></div>
+</div>
+
+<script>
+(function() {
+  var D = [
+    ["Deep Learning", "IIT Ropar", "ai", "AI and ML", "93%"],
+    ["Python for Data Science", "NPTEL", "data", "Data", "81%"],
+    ["OCI 2025 Generative AI Professional", "Oracle", "ai", "AI and ML"],
+    ["OCI 2025 AI Foundations Associate", "Oracle", "ai", "AI and ML"],
+    ["OCI 2025 Data Science Professional", "Oracle", "data", "Data"],
+    ["Google Data Analytics", "Coursera", "data", "Data"],
+    ["SQL (PostgreSQL)", "IBM", "data", "Data"],
+    ["Introduction to Data Science", "Infosys Springboard", "data", "Data"],
+    ["Data Analytics", "Novitech R&D", "data", "Data"],
+    ["Excel for Beginners", "Great Learning", "data", "Data"],
+    ["C++ Programming", "IIT Bombay", "web", "Software and web"],
+    ["Career Essentials in Software Development", "Microsoft", "web", "Software and web"],
+    ["Python Basics", "Infosys Springboard", "web", "Software and web"],
+    ["Drupal", "IIT Bombay", "web", "Software and web"],
+    ["Intro to Front-End Development", "Simplilearn", "web", "Software and web"],
+    ["Website UI/UX Designing Using ChatGPT", "Simplilearn", "web", "Software and web"],
+    ["Ethical Hacking: Cloud Computing Concepts", "Infosys Springboard", "sec", "Security"]
+  ];
+
+  var GL = {
+    ai: "#3D5BFF",
+    data: "#19D3BC",
+    web: "#FF6A55",
+    sec: "#7C8BE0"
+  };
+
+  var N = D.length;
+  var step = 360 / N;
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var $ = function(id) { return document.getElementById(id); };
+
+  var stage = $("stage");
+  var ring = $("ring");
+  var posEl = $("pos");
+  var catEl = $("cat");
+  var live = $("live");
+  var ticksEl = $("ticks");
+  var wrap = document.querySelector(".wrap");
+
+  var els = [];
+  var ticks = [];
+  var R = 0;
+  var cw = 0;
+  var tilt = -6;
+  var rot = reduce ? 0 : 210;
+  var prev = rot;
+  var target = 0;
+  var vel = 0;
+  var dragging = false;
+  var lastX = 0;
+  var moved = 0;
+  var lastIdx = -1;
+  var py = 0;
+  var ptx = 0;
+  var dirty = true;
+  var sway = 0;
+
+  D.forEach(function(d, i) {
+    var c = document.createElement("div");
+    c.className = "card " + d[2];
+    c.innerHTML = '<div class="orb"><i></i></div><span class="iss"></span>' + (d[4] ? '<span class="bd"></span>' : "") + '<h2></h2><small></small>';
+    c.querySelector(".iss").textContent = d[1];
+    if (d[4]) c.querySelector(".bd").textContent = d[4];
+    c.querySelector("h2").textContent = d[0];
+    c.querySelector("small").textContent = d[3];
+    c.dataset.i = i;
+    ring.appendChild(c);
+    els.push(c);
+
+    var t = document.createElement("span");
+    ticksEl.appendChild(t);
+    ticks.push(t);
+  });
+
+  function layout() {
+    cw = els[0].offsetWidth;
+    R = (cw / 2) / Math.tan(Math.PI / N) * 1.06;
+    sizeSky();
+    dirty = true;
+  }
+
+  window.addEventListener("resize", layout);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(layout);
+  }
+
+  function snap(v) {
+    return Math.round(v / step) * step;
+  }
+
+  function goBy(n) {
+    target = snap(target) + n * step;
+    dirty = true;
+  }
+
+  function render() {
+    ring.style.transform = "rotateX(" + (tilt + py * -3) + "deg) translateZ(" + (-R) + "px) rotateZ(" + sway.toFixed(2) + "deg) rotateY(" + rot + "deg)";
+    var idx = (((Math.round(-rot / step) % N) + N) % N);
+
+    for (var i = 0; i < N; i++) {
+      var a = (((i * step + rot + 540) % 360) + 360) % 360 - 180;
+      var k = Math.min(Math.abs(a) / 95, 1);
+      var lift = Math.max(0, 1 - Math.abs(a) / step) * cw * 0.22;
+      els[i].style.transform = "rotateY(" + (i * step) + "deg) translateZ(" + (R + lift).toFixed(1) + "px)";
+      els[i].style.setProperty("--d", (k * 0.7).toFixed(3));
+      els[i].style.setProperty("--fx", (50 + a * 2.2 + ptx * 18).toFixed(1) + "%");
+      els[i].style.setProperty("--fo", (0.65 - k * 0.5).toFixed(2));
+    }
+
+    if (idx !== lastIdx) {
+      if (lastIdx >= 0) {
+        els[lastIdx].classList.remove("on");
+        ticks[lastIdx].classList.remove("on");
+        if (!reduce && navigator.vibrate) {
+          try { navigator.vibrate(6); } catch (_) {}
+        }
+      }
+      lastIdx = idx;
+      els[idx].classList.add("on");
+      ticks[idx].classList.add("on");
+
+      var n = idx + 1;
+      posEl.innerHTML = "<b>" + (n < 10 ? "0" + n : n) + "</b> / " + N;
+      catEl.textContent = D[idx][3];
+      wrap.style.setProperty("--g", GL[D[idx][2]]);
+      live.textContent = D[idx][0] + ", " + D[idx][1];
+    }
+  }
+
+  /* Starfield: parallax tied to rotation, streaks during fast motion */
+  var sky = $("sky");
+  var sx = sky.getContext("2d");
+  var SW = 0;
+  var SH = 0;
+  var dpr = Math.min(devicePixelRatio || 1, 2);
+  var S = [];
+
+  for (var s = 0; s < 160; s++) {
+    S.push({
+      x: Math.random(),
+      y: Math.random(),
+      z: 0.2 + Math.random() * 0.8,
+      p: Math.random() * 6.28
+    });
+  }
+
+  function sizeSky() {
+    var r = wrap.getBoundingClientRect();
+    SW = r.width;
+    SH = r.height;
+    sky.width = SW * dpr;
+    sky.height = SH * dpr;
+    sx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function stars(t) {
+    sx.clearRect(0, 0, SW, SH);
+    var dv = rot - prev;
+    prev = rot;
+
+    for (var i = 0; i < S.length; i++) {
+      var o = S[i];
+      var x = (((o.x * SW + rot * o.z * 3.4 + (reduce ? 0 : t * 0.006 * o.z)) % SW) + SW) % SW;
+      var y = o.y * SH;
+      var a = (0.3 + 0.7 * o.z) * (0.65 + 0.35 * Math.sin(t * 0.002 + o.p));
+      var len = Math.min(110, Math.abs(dv) * o.z * 9);
+
+      sx.strokeStyle = "rgba(255, 255, 255, " + a.toFixed(2) + ")";
+      sx.lineWidth = o.z * 1.7;
+      sx.lineCap = "round";
+      sx.beginPath();
+      sx.moveTo(x - (dv > 0 ? len : -len), y);
+      sx.lineTo(x + 0.01, y);
+      sx.stroke();
+    }
+  }
+
+  function frame(t) {
+    if (!dragging) {
+      var diff = target - rot;
+      if (Math.abs(diff) > 0.02) {
+        rot += diff * (reduce ? 1 : 0.085);
+        dirty = true;
+      } else if (rot !== target) {
+        rot = target;
+        dirty = true;
+      }
+    }
+
+    var sw = reduce ? 0 : Math.max(-5, Math.min(5, (target - rot) * 0.09 + (dragging ? vel * 0.5 : 0)));
+    if (Math.abs(sw - sway) > 0.01) {
+      sway += (sw - sway) * 0.2;
+      dirty = true;
+    }
+
+    if (dirty) render();
+    if (dirty || !reduce) {
+      stars(t || 0);
+    }
+    dirty = false;
+    requestAnimationFrame(frame);
+  }
+
+  layout();
+  render();
+  requestAnimationFrame(frame);
+
+  /* Gestures: 1:1 under the finger, with inertia and snap */
+  stage.addEventListener("pointerdown", function(e) {
+    dragging = true;
+    moved = 0;
+    vel = 0;
+    lastX = e.clientX;
+    stage.classList.add("drag");
+    try { stage.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+
+  stage.addEventListener("pointermove", function(e) {
+    if (e.pointerType === "mouse") {
+      var r = stage.getBoundingClientRect();
+      py = ((e.clientY - r.top) / r.height - 0.5) * 2;
+      ptx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      dirty = true;
+    }
+    if (!dragging) return;
+    var dx = e.clientX - lastX;
+    lastX = e.clientX;
+    moved += Math.abs(dx);
+    var d = dx * (57.3 / R) * 1.25;
+    rot += d;
+    vel = vel * 0.6 + d * 0.4;
+    target = rot;
+    dirty = true;
+  });
+
+  function end(e) {
+    if (!dragging) return;
+    dragging = false;
+    stage.classList.remove("drag");
+
+    if (moved < 6 && e && e.target) {
+      var c = e.target.closest && e.target.closest(".card");
+      if (c) {
+        var i = +c.dataset.i;
+        var a = (((i * step + rot + 540) % 360) + 360) % 360 - 180;
+        target = snap(rot - a);
+        dirty = true;
+        return;
+      }
+    }
+    target = snap(rot + vel * 9);
+    dirty = true;
+  }
+
+  stage.addEventListener("pointerup", end);
+  stage.addEventListener("pointercancel", function() { end(null); });
+  stage.addEventListener("pointerleave", function() {
+    py = 0;
+    ptx = 0;
+    dirty = true;
+  });
+
+  $("prev").addEventListener("click", function() { goBy(1); });
+  $("next").addEventListener("click", function() { goBy(-1); });
+
+  stage.addEventListener("keydown", function(e) {
+    if (e.key === "ArrowRight") {
+      goBy(-1);
+      e.preventDefault();
+    }
+    if (e.key === "ArrowLeft") {
+      goBy(1);
+      e.preventDefault();
+    }
+  });
+
+  stage.addEventListener("wheel", function(e) {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 8) {
+      e.preventDefault();
+      target = rot - e.deltaX * 0.15;
+      clearTimeout(stage._w);
+      stage._w = setTimeout(function() {
+        target = snap(target);
+        dirty = true;
+      }, 120);
+      dirty = true;
+    }
+  }, { passive: false });
+})();
+</script>
+</body>
+</html>
