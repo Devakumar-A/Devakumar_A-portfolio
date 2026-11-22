@@ -1435,13 +1435,13 @@
     gap: 2.5rem;
   }
 
-  .about-content-column {
+  .about-portrait-column {
     order: 1;
+    margin-bottom: 2rem;
   }
 
-  .about-portrait-column {
+  .about-content-column {
     order: 2;
-    margin-bottom: 1.5rem;
   }
 
   .about-portrait-stage {

@@ -533,7 +533,7 @@ export function AboutSection() {
   const shouldReduceMotion = useReducedMotion();
 
   const base = import.meta.env.BASE_URL;
-  const portraitSrc = `${base}assets/images/profile/Profile.png`;
+  const portraitSrc = `${base}assets/images/profile/Profile.PNG`;
 
   // Vertical Rolling Word List state (2200ms per row)
   const [activeIndex, setActiveIndex] = useState(0);
@@ -625,7 +625,7 @@ export function AboutSection() {
             className="about-portrait-column"
             initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -32 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
+            viewport={{ once: true, margin: isMobile ? "0px" : "-60px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="about-portrait-stage">
@@ -649,7 +649,16 @@ export function AboutSection() {
                     src={portraitSrc}
                     alt="Portrait of Devakumar A."
                     className="about-portrait-img"
-                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => {
+                      if (!e.currentTarget.dataset.fallback) {
+                        e.currentTarget.dataset.fallback = "1";
+                        e.currentTarget.src = `${base}assets/image/profile/Profile.png`;
+                      } else if (e.currentTarget.dataset.fallback === "1") {
+                        e.currentTarget.dataset.fallback = "2";
+                        e.currentTarget.src = `${base}assets/images/profile/Profile.png`;
+                      }
+                    }}
                   />
                 </div>
               </div>
