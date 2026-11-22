@@ -35,25 +35,19 @@ export function ResearchSection() {
     offset: ["start end", "end start"],
   });
 
-  // Smooth physics spring for fluid scroll transitions
+  // Responsive spring physics for smooth, non-laggy motion
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 260,
-    damping: 30,
+    stiffness: 280,
+    damping: 32,
     restDelta: 0.001,
   });
 
-  // Bi-directional translation & opacity when scrolling down and up
-  const contentY = useTransform(smoothProgress, [0, 0.35, 0.65, 1], [40, 0, 0, -40]);
-  const contentOpacity = useTransform(smoothProgress, [0, 0.22, 0.78, 1], [0.2, 1, 1, 0.2]);
-  const contentScale = useTransform(smoothProgress, [0, 0.3, 0.7, 1], [0.97, 1, 1, 0.97]);
+  // Bi-directional fade-up entrance and exit (fade up on approach, fade up on departure)
+  const headerY = useTransform(smoothProgress, [0, 0.18, 0.82, 1], [32, 0, 0, -25]);
+  const headerOpacity = useTransform(smoothProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
 
-  // Ambient backlight tracking with scroll
-  const glowX = useTransform(smoothProgress, [0, 1], ["-15%", "15%"]);
-  const glowOpacity = useTransform(smoothProgress, [0, 0.3, 0.7, 1], [0.15, 0.5, 0.5, 0.15]);
-
-  // Header staggered entrance on scroll
-  const headerY = useTransform(smoothProgress, [0, 0.3], [24, 0]);
-  const headerOpacity = useTransform(smoothProgress, [0, 0.22], [0.25, 1]);
+  const contentY = useTransform(smoothProgress, [0, 0.22, 0.8, 1], [45, 0, 0, -35]);
+  const contentOpacity = useTransform(smoothProgress, [0, 0.18, 0.82, 1], [0, 1, 1, 0]);
 
   return (
     <section
@@ -62,19 +56,8 @@ export function ResearchSection() {
       className="rs"
       aria-labelledby="rs-title"
     >
-      {/* Dynamic ambient backlight reacting to scroll */}
-      <motion.div
-        className="rs-glow-backlight"
-        style={
-          reduceMotion
-            ? { opacity: 0.35 }
-            : { x: glowX, opacity: glowOpacity }
-        }
-        aria-hidden="true"
-      />
-
       <div className="rs-in">
-        {/* Header with scroll-reactive glide */}
+        {/* Header with scroll-reactive glide & fade up */}
         <motion.div
           className="rs-header-wrap"
           style={reduceMotion ? undefined : { y: headerY, opacity: headerOpacity }}
@@ -86,7 +69,7 @@ export function ResearchSection() {
           <h2 id="rs-title">Research</h2>
         </motion.div>
 
-        {/* The Paper Entry with bidirectional scroll-down & scroll-up response */}
+        {/* Minimalist Monochrome Research Paper Card */}
         <motion.article
           className="rs-item"
           style={
@@ -95,14 +78,10 @@ export function ResearchSection() {
               : {
                   y: contentY,
                   opacity: contentOpacity,
-                  scale: contentScale,
                 }
           }
-          whileHover={reduceMotion ? undefined : { y: -4, transition: { duration: 0.25 } }}
+          whileHover={reduceMotion ? undefined : { y: -3, transition: { duration: 0.2 } }}
         >
-          {/* Subtle top reflection rim */}
-          <div className="rs-item-rim" aria-hidden="true" />
-
           <div className="rs-side">
             <p className="rs-year">{PAPER.year}</p>
             <div className="rs-badge">
