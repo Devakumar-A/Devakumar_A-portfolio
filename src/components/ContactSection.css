@@ -1,12 +1,12 @@
 .ct-section {
-  --bg: #e6eaef;
-  --ink: #0f1624;
-  --dim: #0f162494;
-  --line: #0f162430;
+  --bg: #000000;
+  --ink: #e6eaef;
+  --dim: #e6eaef8f;
+  --line: #e6eaef2e;
   --acc: #ff4a1c;
-  color-scheme: light;
+  color-scheme: dark;
   position: relative;
-  background: var(--bg);
+  background: #000000 !important;
   color: var(--ink);
   font-family: "Instrument Sans", system-ui, sans-serif;
   min-height: 100svh;

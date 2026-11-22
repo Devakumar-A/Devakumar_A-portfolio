@@ -39,9 +39,11 @@ section,
    PROJECTS SECTION
 ================================ */
 #projects {
-  max-width: 1200px;
-  margin: auto;
-  padding: 6rem 0;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #000000 !important;
 }
 
 .section-title {

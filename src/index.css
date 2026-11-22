@@ -23,12 +23,12 @@
    making the space background invisible in all sections below Hero. */
 @layer base {
   html {
-    background-color: #020617 !important;
-    background: #020617 !important;
+    background-color: #000000 !important;
+    background: #000000 !important;
   }
   body {
-    background-color: transparent !important;
-    background: transparent !important;
+    background-color: #000000 !important;
+    background: #000000 !important;
   }
 }
 

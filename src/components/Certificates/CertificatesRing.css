@@ -18,8 +18,8 @@
   padding: calc(var(--nav) + clamp(20px, 3vw, 36px)) 0 clamp(20px, 3vw, 32px);
   user-select: none;
   -webkit-user-select: none;
-  background: radial-gradient(120% 80% at 50% 30%, #14229A 0%, #0A1166 40%, #050833 100%);
-  background-color: #050833;
+  background: radial-gradient(120% 80% at 50% 30%, #0d1544 0%, #060920 40%, #000000 100%);
+  background-color: #000000;
 }
 
 #cr-sky {

@@ -32,7 +32,7 @@ html.scroll-locked {
    ROOT VARIABLES
 ===================================================== */
 :root {
-  --bg-dark: #020617;
+  --bg-dark: #000000;
 
   --bg-glass: rgba(255, 255, 255, 0.08);
   --border-glass: rgba(255, 255, 255, 0.15);
@@ -49,18 +49,12 @@ html.scroll-locked {
 ===================================================== */
 html {
   scroll-behavior: smooth;
-  /* Root canvas background = dark theme. html background paints at stacking step 1
-     (behind everything, including the canvas at step 2). This ensures no white
-     viewport flicker even before the canvas loads. */
-  background: #020617;
+  background: #000000 !important;
 }
 
 body {
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  /* MUST be transparent. body { position: relative } makes body a positioned element
-     at z-index: auto (stacking step 6), which paints AFTER the canvas (step 2).
-     If body has any opaque background it covers the canvas everywhere. */
-  background: transparent !important;
+  background: #000000 !important;
   color: var(--text-primary);
   min-height: 100vh;
   position: relative;
@@ -69,12 +63,9 @@ body {
 .portfolio-app {
   width: 100%;
   max-width: 100%;
-  /* DO NOT add overflow-x: hidden here. overflow + position:relative makes this
-     element a containing block for position:fixed children (the canvas), which
-     prevents the fixed canvas from covering the full viewport. overflow-x:hidden
-     is already handled on html+body above. */
   position: relative;
   transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.6s ease;
+  background: #000000 !important;
 }
 
 /* =====================================================
@@ -87,8 +78,7 @@ body {
   height: 100%;
   z-index: -10;
   pointer-events: none;
-  background: radial-gradient(circle at top, #0f172a, #020617 70%);
-  /* Promote canvas to its own GPU compositor layer */
+  background: #000000 !important;
   will-change: transform;
   transform: translate3d(0, 0, 0);
 }

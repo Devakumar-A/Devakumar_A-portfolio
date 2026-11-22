@@ -9,7 +9,9 @@
   --dv-text: #f1f1ee;
 
   position: relative;
-  background: #000;
+  width: 100%;
+  max-width: 100%;
+  background: #000000 !important;
   color: var(--dv-text);
   font-family: var(--dv-sans);
   padding: clamp(28px, 3.5vw, 40px) 0 clamp(20px, 2.5vw, 28px);
