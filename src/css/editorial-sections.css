@@ -89,7 +89,7 @@
   margin-bottom: 0 !important;
   border-top: none;
   border-bottom: none !important;
-  padding: clamp(32px, 3.8vw, 44px) 0 clamp(24px, 2.8vw, 32px);
+  padding: 25px 0 25px;
   overflow: hidden;
   isolation: isolate;
   contain: paint;
@@ -1422,7 +1422,7 @@
 
   /* Mobile About Single Column */
   .about-cinematic-section {
-    padding: 24px 0 24px;
+    padding: 25px 0 25px;
     margin-bottom: 0 !important;
   }
 

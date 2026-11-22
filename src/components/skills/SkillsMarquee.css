@@ -17,7 +17,7 @@
   overflow: hidden;
   background: var(--sm-bg);
   color: var(--sm-text);
-  padding: clamp(32px, 3.8vw, 44px) 0 clamp(18px, 2.2vw, 26px);
+  padding: 25px 0 25px;
 }
 
 /* Rich, subtle atmospheric warmth (champagne & amber undertones) */
@@ -224,8 +224,8 @@
   .sm-section {
     --sm-tile-w: 176px;
     --sm-gap: 12px;
-    padding-top: 24px;
-    padding-bottom: 16px;
+    padding-top: 25px;
+    padding-bottom: 25px;
   }
   .sm-header {
     margin: 0 auto 22px;

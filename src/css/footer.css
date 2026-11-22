@@ -36,7 +36,7 @@
   background: var(--pf-bg) !important;
   color: var(--pf-text);
   font-family: var(--pf-sans);
-  padding: clamp(28px, 3.5vw, 40px) 0 36px 0;
+  padding: 25px 0 36px 0;
   overflow: hidden;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   isolation: isolate;
@@ -525,7 +525,7 @@
 
 @media (max-width: 768px) {
   .prof-footer {
-    padding-top: 24px;
+    padding-top: 25px;
     padding-bottom: 28px;
   }
   .prof-inquiry-banner {
