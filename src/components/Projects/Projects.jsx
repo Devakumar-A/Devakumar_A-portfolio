@@ -28,6 +28,8 @@ const COLORWAY_KEYS = {
   bone: "#e8452c",
   steel: "#2b5fd9",
   lilac: "#f0a800",
+  sage: "#1f6b3a",
+  rose: "#c2255c",
 };
 
 function useMedia(query) {
@@ -89,7 +91,7 @@ const ProjectCard = forwardRef(function ProjectCard(
 
   const targetY = depth === 0 ? 0 : depth === 1 ? peek1 : peek2;
   const targetScale = depth === 0 ? 1 : depth === 1 ? 0.955 : 0.91;
-  const targetZIndex = depth === 0 ? 3 : depth === 1 ? 2 : 1;
+  const targetZIndex = depth === 0 ? 30 : Math.max(1, 25 - depth);
   const baseDim = depth === 0 ? 0 : depth === 1 ? 0.35 : 0.55;
 
   // Drag interaction mappings for front and depth-1 card
@@ -135,11 +137,11 @@ const ProjectCard = forwardRef(function ProjectCard(
         className={`dv ${isFront ? "is-front" : ""}`}
         data-cw={project.colorway}
         data-paused={isPaused}
-        inert={depth > 0 ? "" : undefined}
-        aria-hidden={depth > 0 ? "true" : undefined}
+        inert={!isFront ? "" : undefined}
+        aria-hidden={!isFront ? "true" : undefined}
         role="group"
         aria-roledescription="slide"
-        aria-label={`${depth + 1} of 3: ${project.title}`}
+        aria-label={`Project ${index + 1} of ${projects.length}: ${project.title}`}
         aria-labelledby={`${uid}-t`}
         drag={isFront ? "x" : false}
         dragControls={dragControls}
@@ -194,9 +196,15 @@ const ProjectCard = forwardRef(function ProjectCard(
                 </span>
               </div>
               <div className="lcd-body" key={page}>
-                {page === 0 && <Screen />}
-                {page === 1 && <SpecsScreen items={project.specs} />}
-                {page === 2 && <StackScreen items={project.tech} />}
+                {depth <= 2 ? (
+                  <>
+                    {page === 0 && <Screen />}
+                    {page === 1 && <SpecsScreen items={project.specs} />}
+                    {page === 2 && <StackScreen items={project.tech} />}
+                  </>
+                ) : (
+                  <div className="lcd-placeholder" aria-hidden="true" />
+                )}
               </div>
               <i className="lcd-glass" aria-hidden="true" />
             </div>
@@ -288,6 +296,9 @@ const ProjectCard = forwardRef(function ProjectCard(
             </button>
 
             <div className="dv-btns">
+              {project.links.length === 0 && project.plate && (
+                <span className="dv-plate">{project.plate}</span>
+              )}
               {project.links.map((l, i) => (
                 <a
                   key={l.label}
@@ -318,7 +329,7 @@ const ProjectCard = forwardRef(function ProjectCard(
       </motion.article>
 
       {/* Transparent overlay button over visible peeking bottom edge */}
-      {depth > 0 && (
+      {depth > 0 && depth <= 2 && (
         <button
           type="button"
           tabIndex={-1}
@@ -335,9 +346,9 @@ const ProjectCard = forwardRef(function ProjectCard(
    MAIN PROJECTS DECK COMPONENT
    ============================================================================== */
 export default function Projects({ id = "projects" }) {
-  const [order, setOrder] = useState([0, 1, 2]); // order[0] is front card
-  const frontIndex = order[0];
-  const frontProject = projects[frontIndex];
+  const [order, setOrder] = useState(() => projects.map((_, i) => i)); // order[0] is front card
+  const frontIndex = order[0] ?? 0;
+  const frontProject = projects[frontIndex] || projects[0];
 
   const sectionRef = useRef(null);
   const deckRef = useRef(null);
@@ -365,28 +376,32 @@ export default function Projects({ id = "projects" }) {
   }, []);
 
   // Swiping next
-  const next = useCallback(() => {
-    if (isAnimatingRef.current) return;
-    isAnimatingRef.current = true;
+  const next = useCallback(
+    (direction = 1) => {
+      if (isAnimatingRef.current) return;
+      isAnimatingRef.current = true;
 
-    if (reduceMotion) {
-      setOrder((prev) => [prev[1], prev[2], prev[0]]);
-      isAnimatingRef.current = false;
-      return;
-    }
+      if (reduceMotion) {
+        setOrder((prev) => [...prev.slice(1), prev[0]]);
+        isAnimatingRef.current = false;
+        return;
+      }
 
-    const cardEl = cardRefs[frontIndex]?.current;
-    const width = cardEl ? cardEl.offsetWidth : 800;
+      const cardEl = cardRefs[frontIndex]?.current;
+      const width = cardEl ? cardEl.offsetWidth : 800;
+      const flyTarget = direction < 0 ? -width * 1.25 : width * 1.25;
 
-    animate(dragX, width * 1.25, {
-      duration: 0.35,
-      ease: [0.32, 0, 0.67, 0], // easeIn
-    }).then(() => {
-      setOrder((prev) => [prev[1], prev[2], prev[0]]);
-      dragX.set(0);
-      isAnimatingRef.current = false;
-    });
-  }, [cardRefs, dragX, frontIndex, reduceMotion]);
+      animate(dragX, flyTarget, {
+        duration: 0.35,
+        ease: [0.32, 0, 0.67, 0], // easeIn
+      }).then(() => {
+        setOrder((prev) => [...prev.slice(1), prev[0]]);
+        dragX.set(0);
+        isAnimatingRef.current = false;
+      });
+    },
+    [cardRefs, dragX, frontIndex, reduceMotion]
+  );
 
   // Swiping previous
   const prev = useCallback(() => {
@@ -394,18 +409,18 @@ export default function Projects({ id = "projects" }) {
     isAnimatingRef.current = true;
 
     if (reduceMotion) {
-      setOrder((prev) => [prev[2], prev[0], prev[1]]);
+      setOrder((prev) => [prev[prev.length - 1], ...prev.slice(0, -1)]);
       isAnimatingRef.current = false;
       return;
     }
 
-    const lastIdx = order[2];
+    const lastIdx = order[order.length - 1];
     const cardEl = cardRefs[lastIdx]?.current;
     const width = cardEl ? cardEl.offsetWidth : 800;
 
     // Last card springs into view from left
     dragX.set(-width * 0.9);
-    setOrder((prev) => [prev[2], prev[0], prev[1]]);
+    setOrder((prev) => [prev[prev.length - 1], ...prev.slice(0, -1)]);
 
     animate(dragX, 0, {
       type: "spring",
@@ -422,10 +437,17 @@ export default function Projects({ id = "projects" }) {
       if (isAnimatingRef.current) return;
       const curDepth = order.indexOf(targetProjectIndex);
       if (curDepth === 0) return;
-      if (curDepth === 1) next();
-      else if (curDepth === 2) prev();
+      if (curDepth === 1) {
+        next(1);
+      } else {
+        setOrder((prev) => {
+          const idx = prev.indexOf(targetProjectIndex);
+          if (idx === -1) return prev;
+          return [...prev.slice(idx), ...prev.slice(0, idx)];
+        });
+      }
     },
-    [next, prev, order]
+    [next, order]
   );
 
   // Keyboard navigation on deck wrapper
@@ -433,7 +455,7 @@ export default function Projects({ id = "projects" }) {
     if (e.target !== deckRef.current) return;
     if (e.key === "ArrowRight") {
       e.preventDefault();
-      next();
+      next(1);
     } else if (e.key === "ArrowLeft") {
       e.preventDefault();
       prev();
@@ -464,7 +486,7 @@ export default function Projects({ id = "projects" }) {
 
       {/* Screen reader live region */}
       <div className="sr-only" aria-live="polite" aria-atomic="true">
-        {`Showing project ${frontIndex + 1} of ${projects.length}: ${frontProject.title}`}
+        {`Project ${frontIndex + 1} of ${projects.length}: ${frontProject.title}`}
       </div>
 
       <div
@@ -507,23 +529,21 @@ export default function Projects({ id = "projects" }) {
             {String(projects.length).padStart(2, "0")}
           </div>
 
-          <div className="dv-deck-leds" role="tablist" aria-label="Project selection LEDs">
-            {projects.map((p, i) => {
-              const isActive = i === frontIndex;
-              return (
-                <button
-                  key={p.id}
-                  type="button"
-                  className={`dv-deck-led-btn ${isActive ? "is-active" : ""}`}
-                  aria-label={`Show project ${i + 1}: ${p.title}`}
-                  aria-pressed={isActive}
-                  style={isActive ? { color: COLORWAY_KEYS[p.colorway] } : undefined}
-                  onClick={() => bringToFront(i)}
-                >
-                  <i className="led" aria-hidden="true" />
-                </button>
-              );
-            })}
+          <div
+            className="dv-deck-rail"
+            role="progressbar"
+            aria-valuenow={frontIndex + 1}
+            aria-valuemin={1}
+            aria-valuemax={projects.length}
+            aria-label="Projects deck progress"
+          >
+            <div
+              className="dv-deck-progress-fill"
+              style={{
+                width: `${((frontIndex + 1) / projects.length) * 100}%`,
+                backgroundColor: activeKeyColor,
+              }}
+            />
           </div>
 
           <div className="dv-deck-nav">
@@ -540,7 +560,7 @@ export default function Projects({ id = "projects" }) {
             <button
               type="button"
               className="dv-deck-nav-btn"
-              onClick={next}
+              onClick={() => next(1)}
               aria-label="Next project"
             >
               <span className="face" aria-hidden="true">
