@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Live Portfolio](https://img.shields.io/badge/Live_Portfolio-000000?style=for-the-badge&logo=googlechrome&logoColor=22d3ee)](https://devakumar-a.github.io/Devakumar/)
+[![Live Portfolio](https://img.shields.io/badge/Live_Portfolio-000000?style=for-the-badge&logo=googlechrome&logoColor=22d3ee)](https://devakumar-a.github.io/Devakumar_A-portfolio/)
 [![React 19](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite_8-646CFF?style=for-the-badge&logo=vite&logoColor=FFD62E)](https://vitejs.dev/)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
@@ -13,7 +13,7 @@
 
 **A tactile, hardware-inspired developer portfolio and interactive showcase featuring an 18-device physical synthesizer deck, peer-reviewed deep learning BCI research, and GPU-optimized 3D spatial experiences.**
 
-[🌐 Explore Live Site](https://devakumar-a.github.io/Devakumar/) · [📄 Read Research Paper](https://doi.org/10.25258/ijddt.16.58s.21) · [💬 Get in Touch](mailto:devak9391@gmail.com)
+[🌐 Explore Live Site](https://devakumar-a.github.io/Devakumar_A-portfolio/) · [📄 Read Research Paper](https://doi.org/10.25258/ijddt.16.58s.21) · [💬 Get in Touch](mailto:devak9391@gmail.com)
 
 <br/>
 

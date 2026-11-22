@@ -17,6 +17,9 @@ concurrency:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -32,10 +35,15 @@ jobs:
 
       - name: Build Vite app
         run: npm run build
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
 
-      - name: Add .nojekyll to dist (prevent Jekyll processing)
-        run: touch dist/.nojekyll
+      - name: Prevent Jekyll & setup 404 fallback
+        run: |
+          touch dist/.nojekyll
+          cp dist/index.html dist/404.html
 
+      # Deployment method 1: Deploy to gh-pages branch (if source is "Deploy from a branch")
       - name: Deploy dist/ to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -43,3 +51,19 @@ jobs:
           publish_dir: ./dist
           publish_branch: gh-pages
           force_orphan: true
+
+      # Deployment method 2: Native GitHub Actions deployment (if source is "GitHub Actions")
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        continue-on-error: true
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        continue-on-error: true
+        with:
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
