@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { isLowPowerDevice } from "../utils/performance";
 import {
   Brain,
   Code2,
@@ -47,7 +48,7 @@ function AboutParticleWaves({ shouldReduceMotion }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    if (shouldReduceMotion) return;
+    if (shouldReduceMotion || isLowPowerDevice()) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d", { alpha: true });

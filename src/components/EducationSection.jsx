@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { isLowPowerDevice } from "../utils/performance";
 import "../css/education.css";
 
 function hexToRgb(c) {
@@ -15,8 +16,10 @@ function hexToRgb(c) {
 function ParticleCanvas({ value, label }) {
   const wrapRef = useRef(null);
   const canvasRef = useRef(null);
+  const [lowPower] = useState(() => isLowPowerDevice());
 
   useEffect(() => {
+    if (lowPower) return;
     const wrap = wrapRef.current;
     const cv = canvasRef.current;
     if (!wrap || !cv) return;
@@ -223,6 +226,19 @@ function ParticleCanvas({ value, label }) {
       ro.observe(wrap);
     }
 
+    let io = null;
+    if (typeof IntersectionObserver !== "undefined") {
+      io = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible && !raf) kick();
+        else if (!visible && raf) {
+          cancelAnimationFrame(raf);
+          raf = 0;
+        }
+      }, { rootMargin: "150px" });
+      io.observe(wrap);
+    }
+
     return () => {
       cv.removeEventListener("pointerdown", onPointerDown);
       cv.removeEventListener("pointermove", onPointerMove);
@@ -232,9 +248,26 @@ function ParticleCanvas({ value, label }) {
       cv.removeEventListener("touchstart", onPointerDown);
       cv.removeEventListener("touchend", onPointerLeave);
       if (ro) ro.disconnect();
+      if (io) io.disconnect();
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [value]);
+  }, [value, lowPower]);
+
+  if (lowPower) {
+    return (
+      <div className="cgpa cgpa-static-wrap" ref={wrapRef} data-value={value}>
+        <span className="sr">{label || value}</span>
+        <div className="cgpa-static-val" aria-hidden="true">
+          {value}
+        </div>
+        {label && (
+          <p className="cgpa-label" aria-hidden="true">
+            {label}
+          </p>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="cgpa" ref={wrapRef} data-value={value}>

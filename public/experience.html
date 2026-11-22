@@ -841,7 +841,10 @@ header p {
     }
   ];
 
-  var LITE = matchMedia('(pointer:coarse), (max-width: 820px)').matches;
+  var isLowPower = (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+                   (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+                   (navigator.connection && navigator.connection.saveData);
+  var LITE = matchMedia('(pointer:coarse), (max-width: 820px)').matches || isLowPower;
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   var $ = function(i) { return document.getElementById(i); };

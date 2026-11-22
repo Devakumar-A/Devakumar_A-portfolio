@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
+import { isLowPowerDevice } from "../../utils/performance";
 import "./CertificatesRing.css";
 
 const CERTIFICATES_DATA = [
@@ -62,17 +63,27 @@ export default function CertificatesRing({ id = "certifications" }) {
     dirty: true,
     sway: 0,
     reduce: false,
+    lowPower: false,
   });
 
+  const frameRef = useRef(null);
+
+  const wakeAnimation = useCallback(() => {
+    state.current.dirty = true;
+    if (!animFrameRef.current && frameRef.current) {
+      animFrameRef.current = requestAnimationFrame(frameRef.current);
+    }
+  }, []);
+
   const snap = useCallback((v) => {
-    const s = state.current.step;
-    return Math.round(v / s) * s;
+    const s = state.current;
+    return Math.round(v / s.step) * s.step;
   }, []);
 
   const goBy = useCallback((n) => {
     state.current.target = snap(state.current.target) + n * state.current.step;
-    state.current.dirty = true;
-  }, [snap]);
+    wakeAnimation();
+  }, [snap, wakeAnimation]);
 
   // Starfield setup
   const starsRef = useRef([]);
@@ -117,6 +128,7 @@ export default function CertificatesRing({ id = "certifications" }) {
   useEffect(() => {
     const s = state.current;
     s.reduce = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    s.lowPower = isLowPowerDevice();
     s.rot = s.reduce ? 0 : 210;
     s.prev = s.rot;
     s.target = 0;
@@ -218,17 +230,50 @@ export default function CertificatesRing({ id = "certifications" }) {
       }
 
       if (s.dirty) render();
-      if (s.dirty || !s.reduce) {
+      // On battery-saver / low-power mobile, only draw starfield when rotating/dirty, skipping idle redraws
+      if (s.dirty || (!s.reduce && !s.lowPower)) {
         drawStars(t || 0);
       }
       s.dirty = false;
+
+      // Battery saver: when cylinder is at target and not dragging, pause RAF loop to achieve 0% idle CPU
+      if ((s.lowPower || s.reduce) && !s.dragging && Math.abs(s.rot - s.target) < 0.04 && Math.abs(s.sway) < 0.02) {
+        animFrameRef.current = null;
+        return;
+      }
+
       animFrameRef.current = requestAnimationFrame(frame);
     };
 
+    frameRef.current = frame;
     animFrameRef.current = requestAnimationFrame(frame);
+
+    // Pause canvas and 3D loop completely when off-screen
+    let io = null;
+    if (typeof IntersectionObserver !== "undefined" && wrapRef.current) {
+      io = new IntersectionObserver(
+        ([entry]) => {
+          const isVisible = entry.isIntersecting;
+          if (isVisible) {
+            s.dirty = true;
+            if (!animFrameRef.current) {
+              animFrameRef.current = requestAnimationFrame(frame);
+            }
+          } else {
+            if (animFrameRef.current) {
+              cancelAnimationFrame(animFrameRef.current);
+              animFrameRef.current = null;
+            }
+          }
+        },
+        { rootMargin: "250px" }
+      );
+      io.observe(wrapRef.current);
+    }
 
     return () => {
       window.removeEventListener("resize", layout);
+      if (io) io.disconnect();
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     };
   }, [layout]);
@@ -242,6 +287,7 @@ export default function CertificatesRing({ id = "certifications" }) {
     s.lastX = e.clientX;
     stageRef.current?.classList.add("is-dragging");
     try { stageRef.current?.setPointerCapture?.(e.pointerId); } catch (_) {}
+    wakeAnimation();
   };
 
   const handlePointerMove = (e) => {
@@ -253,6 +299,7 @@ export default function CertificatesRing({ id = "certifications" }) {
       s.py = ((e.clientY - r.top) / r.height - 0.5) * 2;
       s.ptx = ((e.clientX - r.left) / r.width - 0.5) * 2;
       s.dirty = true;
+      wakeAnimation();
     }
     if (!s.dragging) return;
     const dx = e.clientX - s.lastX;
@@ -263,6 +310,7 @@ export default function CertificatesRing({ id = "certifications" }) {
     s.vel = s.vel * 0.6 + d * 0.4;
     s.target = s.rot;
     s.dirty = true;
+    wakeAnimation();
   };
 
   const handlePointerUp = (e) => {
@@ -278,11 +326,13 @@ export default function CertificatesRing({ id = "certifications" }) {
         const a = (((i * s.step + s.rot + 540) % 360) + 360) % 360 - 180;
         s.target = snap(s.rot - a);
         s.dirty = true;
+        wakeAnimation();
         return;
       }
     }
     s.target = snap(s.rot + s.vel * 9);
     s.dirty = true;
+    wakeAnimation();
   };
 
   const handlePointerLeave = () => {
@@ -290,6 +340,7 @@ export default function CertificatesRing({ id = "certifications" }) {
     s.py = 0;
     s.ptx = 0;
     s.dirty = true;
+    wakeAnimation();
   };
 
   const handleKeyDown = (e) => {

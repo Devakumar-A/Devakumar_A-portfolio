@@ -200,6 +200,25 @@
   margin: 0 auto;
 }
 
+.cgpa-static-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+}
+
+.cgpa-static-val {
+  font-family: "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: clamp(48px, 11vw, 76px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  background: linear-gradient(90deg, var(--a1, #ff3366) 0%, var(--a2, #ff9900) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  user-select: none;
+}
+
 .cgpa canvas {
   display: block;
   width: 100%;
