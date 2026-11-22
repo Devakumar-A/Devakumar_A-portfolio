@@ -224,11 +224,22 @@
   .sm-section {
     --sm-tile-w: 176px;
     --sm-gap: 12px;
-    padding-top: 25px;
-    padding-bottom: 25px;
+    padding-top: 36px;
+    padding-bottom: 36px;
   }
   .sm-header {
-    margin: 0 auto 22px;
+    margin: 0 auto 28px;
+  }
+  .sm-eyebrow {
+    margin: 0 0 12px;
+  }
+  .sm-lane + .sm-lane {
+    margin-top: 30px;
+  }
+  .sm-lane-label {
+    margin: 0 auto 15px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
   }
   .sm-tile {
     padding: 13px 15px;

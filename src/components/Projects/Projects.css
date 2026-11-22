@@ -709,6 +709,23 @@
 }
 
 /* ---------- Phones ---------- */
+@media (max-width: 640px) {
+  .dv-section {
+    padding-top: 36px;
+    padding-bottom: 36px;
+  }
+  .dv-header {
+    margin-bottom: 36px;
+  }
+  .dv-eyebrow {
+    margin-bottom: 14px;
+  }
+  .dv-h2 {
+    font-size: clamp(30px, 7.5vw, 42px);
+    line-height: 1.08;
+  }
+}
+
 @media (max-width: 520px) {
   .dv-deck {
     padding-bottom: 26px; /* 24px peek for depth 2 */
