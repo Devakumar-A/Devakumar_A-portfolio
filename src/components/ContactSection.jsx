@@ -76,13 +76,17 @@ export function ContactSection() {
       H0 = 220,
       H1 = 900;
 
-    const setLetter = (l, t) => {
+    const setLetter = (l, t, jump = 0) => {
       const w = Math.round((W0 + (W1 - W0) * t) * 10) / 10;
       const h = Math.round(H0 + (H1 - H0) * t);
       const s = `"wdth" ${w},"wght" ${h}`;
       if (s !== l.s) {
         l.s = s;
         l.el.style.fontVariationSettings = s;
+      }
+      if (jump !== l.jump) {
+        l.jump = jump;
+        l.el.style.transform = jump ? `translate3d(0, ${jump}px, 0)` : "none";
       }
     };
 
@@ -113,11 +117,29 @@ export function ContactSection() {
 
     let px = null,
       py = null,
+      lastPy = null,
+      pointerVy = 0,
       rel = 0;
+
+    let lastScrollY = typeof window !== "undefined" ? window.scrollY : 0;
+    let scrollVel = 0;
+
+    const handleScroll = () => {
+      const sy = window.scrollY;
+      const dy = sy - lastScrollY;
+      scrollVel = Math.max(-25, Math.min(25, scrollVel + dy * 0.4));
+      lastScrollY = sy;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     const move = (e) => {
       px = e.clientX;
       py = e.clientY;
+      if (lastPy !== null) {
+        pointerVy = Math.max(-20, Math.min(20, (py - lastPy) * 0.6));
+      }
+      lastPy = py;
       const rect = sec.getBoundingClientRect();
       const rx = px - rect.left;
       const ry = py - rect.top;
@@ -127,12 +149,16 @@ export function ContactSection() {
       if (e.pointerType === "touch") {
         rel = setTimeout(() => {
           px = null;
+          lastPy = null;
+          pointerVy = 0;
         }, 900);
       }
     };
 
     const handleLeave = () => {
       px = null;
+      lastPy = null;
+      pointerVy = 0;
     };
 
     window.addEventListener("pointermove", move, { passive: true });
@@ -144,6 +170,9 @@ export function ContactSection() {
       const time = ms / 1000;
       const fs = parseFloat(mail.style.fontSize) || 60;
       const R = Math.max(120, fs * 2.2);
+
+      scrollVel *= 0.88;
+      pointerVy *= 0.88;
 
       L.forEach((l, i) => {
         let tp = 0;
@@ -159,7 +188,17 @@ export function ContactSection() {
           ? 0.12
           : 0.1 + 0.3 * (0.5 + 0.5 * Math.sin(time * 1.3 - i * 0.5));
         l.t += (Math.max(tp, ti) - l.t) * 0.14;
-        setLetter(l, l.t);
+
+        // Font jumping transition while moving up and down (scroll, drag/touch, ambient ripple)
+        let jumpY = 0;
+        if (!calm) {
+          const scrollBounce = scrollVel * Math.sin(i * 0.45 + time * 3.2);
+          const touchBounce = pointerVy * Math.cos(i * 0.4);
+          const ambientHop = Math.sin(time * 2.8 - i * 0.5) * (2.8 + 3.8 * l.t);
+          jumpY = Math.round((scrollBounce * 0.35 + touchBounce * 0.4 - (l.t * 7) + ambientHop) * 10) / 10;
+        }
+
+        setLetter(l, l.t, jumpY);
       });
       rafId = requestAnimationFrame(frame);
     };
@@ -170,6 +209,7 @@ export function ContactSection() {
       cancelAnimationFrame(rafId);
       clearTimeout(rel);
       window.removeEventListener("resize", fit);
+      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerdown", move);
       document.removeEventListener("pointerleave", handleLeave);
